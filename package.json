@@ -1,0 +1,37 @@
+{
+  "name": "auchiya.dev",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "start": "vp preview",
+    "deploy": "vinext-cloudflare deploy --warm-cache",
+    "deploy:response-store": "cf deploy --prebuilt --mode production --worker auchiya-dev-response-store",
+    "prepare": "vp config"
+  },
+  "dependencies": {
+    "@cloudflare/workers-response-store": "^1.1.1",
+    "@vinext/cloudflare": "^1.1.1",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-server-dom-webpack": "^19.3.1",
+    "vinext": "^1.2.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "2.0.0-beta.v.1",
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitejs/plugin-rsc": "^0.5.38",
+    "cf": "1.0.0-beta.18",
+    "tailwindcss": "latest",
+    "typescript": "latest",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "packageManager": "pnpm@12.14.0"
+}
