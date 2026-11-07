@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#1c1917"/>
+  <rect x="2" y="2" width="60" height="60" rx="8" fill="none" stroke="#a8471c" stroke-opacity="0.35"/>
+  <g fill="#a8471c" font-family="'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP','Noto Serif CJK JP',serif" font-size="23" font-weight="600" text-anchor="middle">
+    <text x="32" y="29">打</text>
+    <text x="32" y="55">矢</text>
+  </g>
+</svg>

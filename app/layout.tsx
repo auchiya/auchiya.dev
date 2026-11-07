@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     template: "%s — Your Name",
   },
   description: "Personal site of Your Name, a software engineer.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
 };
 
 const themeScript = `
