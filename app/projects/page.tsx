@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { projects } from "@/content/site";
+import { projects } from "@/content/projects";
 
 export const metadata: Metadata = {
   title: "Projects",
