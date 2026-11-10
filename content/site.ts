@@ -9,10 +9,10 @@ export type SocialLink = {
   icon: "mail" | "github" | "x" | "linkedin";
 };
 
-export type Post = {
+export type Project = {
   slug: string;
   title: string;
-  date: string;
+  year: string;
   summary: string;
 };
 
@@ -23,17 +23,19 @@ export type MiscItem = {
 };
 
 export const site = {
-  name: "Your Name",
-  monogram: "YN",
-  role: "Software Engineer",
-  location: "Your City",
-  email: "you@example.com",
-  description: "Personal site of Your Name, a software engineer.",
+  name: "Agustin Uchiya",
+  monogram: "AU",
+  lastNameKanji: "打矢",
+  nameKatakana: "アグスティン・打矢",
+  role: "Full-Stack Engineer",
+  location: "Barcelona, Spain",
+  email: "you@auchiya.dev",
+  description: "Personal site of Agustin Uchiya, a full-stack engineer.",
 };
 
 export const nav: NavItem[] = [
   { href: "/", label: "About" },
-  { href: "/writing", label: "Writing" },
+  { href: "/projects", label: "Projects" },
   { href: "/misc", label: "Misc" },
 ];
 
@@ -44,61 +46,61 @@ export const socials: SocialLink[] = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/yourhandle", icon: "linkedin" },
 ];
 
-export const posts: Post[] = [
+export const projects: Project[] = [
   {
-    slug: "placeholder-post-one",
-    title: "Placeholder Post One",
-    date: "2026-11-01",
-    summary: "A short placeholder summary for the first post.",
+    slug: "placeholder-project-one",
+    title: "Placeholder Project One",
+    year: "2026",
+    summary: "A short placeholder summary for the first project.",
   },
   {
-    slug: "placeholder-post-two",
-    title: "Placeholder Post Two",
-    date: "2026-10-12",
-    summary: "A short placeholder summary for the second post.",
+    slug: "placeholder-project-two",
+    title: "Placeholder Project Two",
+    year: "2025",
+    summary: "A short placeholder summary for the second project.",
   },
   {
-    slug: "placeholder-post-three",
-    title: "Placeholder Post Three",
-    date: "2026-09-23",
-    summary: "A short placeholder summary for the third post.",
+    slug: "placeholder-project-three",
+    title: "Placeholder Project Three",
+    year: "2025",
+    summary: "A short placeholder summary for the third project.",
   },
   {
-    slug: "placeholder-post-four",
-    title: "Placeholder Post Four",
-    date: "2026-08-04",
-    summary: "A short placeholder summary for the fourth post.",
+    slug: "placeholder-project-four",
+    title: "Placeholder Project Four",
+    year: "2024",
+    summary: "A short placeholder summary for the fourth project.",
   },
   {
-    slug: "placeholder-post-five",
-    title: "Placeholder Post Five",
-    date: "2026-06-18",
-    summary: "A short placeholder summary for the fifth post.",
+    slug: "placeholder-project-five",
+    title: "Placeholder Project Five",
+    year: "2024",
+    summary: "A short placeholder summary for the fifth project.",
   },
   {
-    slug: "placeholder-post-six",
-    title: "Placeholder Post Six",
-    date: "2026-04-29",
-    summary: "A short placeholder summary for the sixth post.",
+    slug: "placeholder-project-six",
+    title: "Placeholder Project Six",
+    year: "2023",
+    summary: "A short placeholder summary for the sixth project.",
   },
   {
-    slug: "placeholder-post-seven",
-    title: "Placeholder Post Seven",
-    date: "2026-02-11",
-    summary: "A short placeholder summary for the seventh post.",
+    slug: "placeholder-project-seven",
+    title: "Placeholder Project Seven",
+    year: "2023",
+    summary: "A short placeholder summary for the seventh project.",
   },
   {
-    slug: "placeholder-post-eight",
-    title: "Placeholder Post Eight",
-    date: "2025-12-01",
-    summary: "A short placeholder summary for the eighth post.",
+    slug: "placeholder-project-eight",
+    title: "Placeholder Project Eight",
+    year: "2022",
+    summary: "A short placeholder summary for the eighth project.",
   },
 ];
 
 export const misc: MiscItem[] = [
   {
-    title: "Projects",
-    note: "Open-source projects I maintain",
+    title: "Open Source",
+    note: "Libraries and tools I maintain",
     href: "#",
   },
   {
@@ -122,12 +124,3 @@ export const misc: MiscItem[] = [
     href: "#",
   },
 ];
-
-export function formatDate(iso: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(iso));
-}
