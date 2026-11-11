@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="flex flex-1 items-start">
       <div className="-mt-[5px] w-full md:w-9/12">
-        <Prose className="[&_p]:m-3 text-xl">
+        <Prose className="[&_p]:m-3">
           <p>
             I'm a full-stack software engineer based in {site.location}. I currently work at{" "}
             <a href="https://www.derivco.com/" target="_blank">
