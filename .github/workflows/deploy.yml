@@ -1,0 +1,58 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-cloudflare
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Cloudflare Workers
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Vite+
+        uses: voidzero-dev/setup-vp@v1.21.2
+        with:
+          node-version: lts
+          cache: true
+
+      # Builds the app Worker and the auxiliary Response Store Worker.
+      - name: Build
+        run: pnpm run build
+
+      # The app deploy never deploys the Response Store, so update it first.
+      - name: Deploy Response Store Worker
+        run: pnpm run deploy:response-store
+
+      # Cache warming stages a new version against the currently deployed one,
+      # so it is only available after the first deployment.
+      - name: Check for an existing app deployment
+        id: app-worker
+        run: |
+          if pnpm exec cf workers get auchiya-dev > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy app Worker
+        run: |
+          if [ "${{ steps.app-worker.outputs.exists }}" = "true" ]; then
+            pnpm exec vinext-cloudflare deploy --skip-build --warm-cache
+          else
+            pnpm exec vinext-cloudflare deploy --skip-build
+          fi
