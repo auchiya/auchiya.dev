@@ -31,9 +31,12 @@ export default function Home() {
             <a href="https://www.asince.com.ar/" target="_blank">
               Asince S.R.L.
             </a>{" "}
-            in the Logistics Industry. I care about what the product I work on is helping people to
-            get their job done. I like to think of the underlying problems behind features, and make
-            things work first, deliver and iterate.
+            in the Logistics Industry.
+          </p>
+          <p>
+            I care about what the product I work on is helping people to get their job done. I like
+            to think of the underlying problems behind features, and make things work first, deliver
+            and iterate, balancing pace & quality.
           </p>
           <p>
             I've built some things — a selection lives on the <Link href="/projects">Projects</Link>{" "}
