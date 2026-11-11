@@ -19,7 +19,7 @@ export default function Home() {
             <a href="https://calculadorasolartermica.ar/" target="_blank">
               Calculadora Solar Térmica
             </a>
-            , an app I started in 2022, built from scratch, and that's now used by engineers and
+            , an app I started in 2021, built from scratch, and that's now used by engineers and
             technicians across Argentina.
           </p>
           <p>
