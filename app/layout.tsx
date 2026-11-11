@@ -25,10 +25,10 @@ const archivo = Archivo({
 
 export const metadata: Metadata = {
   title: {
-    default: "Your Name — Software Engineer",
-    template: "%s — Your Name",
+    default: "Agustin Uchiya — Software Engineer",
+    template: "%s — Agustin Uchiya",
   },
-  description: "Personal site of Your Name, a software engineer.",
+  description: "Personal site of Agustin Uchiya, a full-stack software engineer.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
