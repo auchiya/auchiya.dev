@@ -27,7 +27,7 @@ export const nav: NavItem[] = [
 ];
 
 export const socials: SocialLink[] = [
-  { label: "Email", href: `mailto:${site.email}`, icon: "mail" },
+  // { label: "Email", href: `mailto:${site.email}`, icon: "mail" },
   { label: "GitHub", href: "https://github.com/auchiya", icon: "github" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/agustin-uchiya", icon: "linkedin" },
 ];
