@@ -1,6 +1,8 @@
 export type NavItem = {
   href: string;
   label: string;
+  /** Key pressed after `g` to navigate here. */
+  shortcut: string;
 };
 
 export type SocialLink = {
@@ -21,9 +23,9 @@ export const site = {
 };
 
 export const nav: NavItem[] = [
-  { href: "/", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/misc", label: "Misc" },
+  { href: "/", label: "About", shortcut: "a" },
+  { href: "/projects", label: "Projects", shortcut: "p" },
+  { href: "/misc", label: "Misc", shortcut: "m" },
 ];
 
 export const socials: SocialLink[] = [
