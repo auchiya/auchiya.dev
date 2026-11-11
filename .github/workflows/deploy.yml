@@ -20,6 +20,8 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      APP_WORKER: auchiya-dev
+      RESPONSE_STORE_BUCKET: auchiya-dev-response-store-cache-bodies
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -34,6 +36,11 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      # cf deploy --prebuilt does not create a missing R2 bucket from the
+      # generated bindings, so provision the Response Store bucket first.
+      - name: Ensure Response Store R2 bucket exists
+        run: pnpm exec cf r2 buckets get "$RESPONSE_STORE_BUCKET" > /dev/null 2>&1 || pnpm exec cf r2 buckets create-by-name "$RESPONSE_STORE_BUCKET"
+
       # The app deploy never deploys the Response Store, so update it first.
       - name: Deploy Response Store Worker
         run: pnpm run deploy:response-store
@@ -43,7 +50,7 @@ jobs:
       - name: Check for an existing app deployment
         id: app-worker
         run: |
-          if pnpm exec cf workers get auchiya-dev > /dev/null 2>&1; then
+          if pnpm exec cf workers get "$APP_WORKER" > /dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
