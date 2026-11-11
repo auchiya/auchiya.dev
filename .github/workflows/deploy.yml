@@ -13,53 +13,109 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Deploy to Cloudflare Workers
+  # Single job handling validation, building, and environment-based deployments
+  build-and-deploy:
+    # Filter conditions for production deployment vs pull request preview
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request' && !github.event.pull_request.draft)
+
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      APP_WORKER: auchiya-dev
-      RESPONSE_STORE_BUCKET: auchiya-dev-response-store-cache-bodies
+    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || (github.ref == 'refs/heads/master' && 'production' || 'preview') }}
+
+    concurrency:
+      group: ${{ github.event_name == 'workflow_dispatch' && format('deploy-{0}-{1}', inputs.environment, github.run_id) || (github.event_name == 'pull_request' && format('preview-pr-{0}', github.event.pull_request.number) || format('prod-{0}', github.ref)) }}
+      cancel-in-progress: true
+
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v7
 
-      - name: Set up Vite+
-        uses: voidzero-dev/setup-vp@v1.21.2
+      - uses: voidzero-dev/setup-vp@v1.21.2
         with:
-          node-version: lts
           cache: true
+          run-install: true
 
-      # Builds the app Worker and the auxiliary Response Store Worker.
-      - name: Build
-        run: pnpm run build
+      - name: Run Checks
+        run: vp check
 
-      # cf deploy --prebuilt does not create a missing R2 bucket from the
-      # generated bindings, so provision the Response Store bucket first.
-      - name: Ensure Response Store R2 bucket exists
-        run: pnpm exec cf r2 buckets get "$RESPONSE_STORE_BUCKET" > /dev/null 2>&1 || pnpm exec cf r2 buckets create-by-name "$RESPONSE_STORE_BUCKET"
+      - name: Run Tests
+        run: vp test
 
-      # The app deploy never deploys the Response Store, so update it first.
-      - name: Deploy Response Store Worker
-        run: pnpm run deploy:response-store
+      - name: Build frontend
+        run: vpr build
 
-      # Cache warming stages a new version against the currently deployed one,
-      # so it is only available after the first deployment.
-      - name: Check for an existing app deployment
-        id: app-worker
-        run: |
-          if pnpm exec cf workers get "$APP_WORKER" > /dev/null 2>&1; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
+      # Deploy Production
+      - name: Deploy Production Worker
+        if: >-
+          (github.event_name == 'workflow_dispatch' && inputs.environment == 'production') ||
+          (github.event_name == 'push' && github.ref == 'refs/heads/master')
+        run: vp dlx wrangler@4 deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      - name: Deploy app Worker
-        run: |
-          if [ "${{ steps.app-worker.outputs.exists }}" = "true" ]; then
-            pnpm exec vinext-cloudflare deploy --skip-build --warm-cache
-          else
-            pnpm exec vinext-cloudflare deploy --skip-build
-          fi
+      # Deploy Preview (PR only or manual preview selection)
+      - name: Deploy Preview Worker
+        if: >-
+          github.event_name == 'pull_request' ||
+          (github.event_name == 'workflow_dispatch' && inputs.environment == 'preview')
+        run: vp dlx wrangler@4 versions upload
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/wrangler-output.json
+
+      - name: Comment preview URL on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/wrangler-output.json
+        with:
+          script: |
+            const fs = require('fs');
+            const outputFile = process.env.WRANGLER_OUTPUT_FILE_PATH;
+            let previewUrl = null;
+
+            if (fs.existsSync(outputFile)) {
+              const lines = fs.readFileSync(outputFile, 'utf8').trim().split('\n');
+              for (const line of lines) {
+                try {
+                  const entry = JSON.parse(line);
+                  if (entry.type === 'version-upload' && (entry.preview_url || entry.targets?.[0])) {
+                    previewUrl = entry.preview_url || entry.targets[0];
+                    break;
+                  }
+                } catch {}
+              }
+            }
+
+            if (!previewUrl) {
+              core.warning('Could not parse preview URL from wrangler output');
+              return;
+            }
+
+            const body = `🚀 **Preview deployment ready**\n\n${previewUrl}`;
+            const prNumber = context.payload.pull_request.number;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo,
+              issue_number: prNumber,
+            });
+
+            const marker = '<!-- cloudflare-preview-url -->';
+            const existing = comments.find(c => c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                ...context.repo,
+                comment_id: existing.id,
+                body: `${marker}\n${body}`,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: prNumber,
+                body: `${marker}\n${body}`,
+              });
+            }
