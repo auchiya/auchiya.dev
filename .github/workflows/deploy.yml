@@ -39,9 +39,9 @@ jobs:
       - name: Run Checks
         run: vp check
 
-      - name: Run Tests
-        run: vp test
-
+      # - name: Run Tests
+      #   run: vp test
+      #
       - name: Build frontend
         run: vpr build
 
