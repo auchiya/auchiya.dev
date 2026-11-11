@@ -32,17 +32,16 @@ export default function Home() {
               Asince S.R.L.
             </a>{" "}
             in the Logistics Industry. I care about what the product I work on is helping people to
-            get their job done. [the kinds of problems you like to solve] and [how you approach your
-            work].
+            get their job done. I like to think of the underlying problems behind features, and make
+            things work first, deliver and iterate.
           </p>
           <p>
-            I've built [kinds of projects] — a selection lives on the{" "}
-            <Link href="/projects">Projects</Link> page, and I keep a running list of [things you
-            collect] under <Link href="/misc">Misc</Link>.
+            I've built some things — a selection lives on the <Link href="/projects">Projects</Link>{" "}
+            page, and I keep a running list of random stuff under <Link href="/misc">Misc</Link>.
           </p>
           <p>
-            Outside of work, I'm a dogs team person, and I like music and sports, I've been trying a
-            bit of indoor rock climbing since 2023 and counting.
+            Outside of work, I'm a dogs 🐕 team person, I've been trying a bit of indoor rock
+            climbing since 2023 and counting.
           </p>
         </Prose>
       </div>
