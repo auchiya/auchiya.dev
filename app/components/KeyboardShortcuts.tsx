@@ -247,22 +247,20 @@ export function KeyboardShortcutsProvider({ children }: { children: ReactNode })
             event.currentTarget.close();
           }
         }}
-        className="m-auto max-h-[min(85vh,40rem)] w-[min(92vw,44rem)] overflow-y-auto rounded-lg border border-gray-200 bg-white p-6 text-left shadow-xl backdrop:bg-black/40 dark:border-gray-800 dark:bg-gray-900 dark:backdrop:bg-black/60"
+        className="m-auto max-h-[min(85vh,40rem)] w-[min(92vw,44rem)] overflow-y-auto rounded-lg border border-line bg-surface p-6 text-left shadow-xl backdrop:bg-overlay"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 id="shortcut-help-title" className="display text-[16px]">
               Keyboard shortcuts
             </h2>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Shortcuts are paused while typing in a field.
-            </p>
+            <p className="mt-1 text-sm text-muted">Shortcuts are paused while typing in a field.</p>
           </div>
           <button
             type="button"
             onClick={() => dialogRef.current?.close()}
             aria-label="Close keyboard shortcuts"
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded text-gray-400 transition hover:text-gray-700 dark:hover:text-gray-200"
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded text-subtle transition hover:text-ink"
           >
             <svg
               viewBox="0 0 24 24"
@@ -283,7 +281,7 @@ export function KeyboardShortcutsProvider({ children }: { children: ReactNode })
             <section key={group.title} aria-labelledby={`shortcut-group-${group.title}`}>
               <h3
                 id={`shortcut-group-${group.title}`}
-                className="text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500"
+                className="text-xs font-semibold tracking-wide text-subtle uppercase"
               >
                 {group.title}
               </h3>
@@ -293,7 +291,7 @@ export function KeyboardShortcutsProvider({ children }: { children: ReactNode })
                     key={`${group.title}-${hint.description}`}
                     className="flex items-center justify-between gap-4"
                   >
-                    <dt className="text-sm text-gray-600 dark:text-gray-300">{hint.description}</dt>
+                    <dt className="text-sm text-muted">{hint.description}</dt>
                     <dd className="flex shrink-0 items-center gap-1">
                       {hint.keys.map((key, index) => (
                         <kbd key={`${key}-${index}`} className="kbd">
@@ -316,7 +314,7 @@ export function KeyboardShortcutsProvider({ children }: { children: ReactNode })
       {pendingKey ? (
         <div
           aria-hidden="true"
-          className="pointer-events-none fixed bottom-24 left-1/2 z-40 -translate-x-1/2 rounded-full border border-gray-200 bg-white/95 px-3 py-1.5 text-xs text-gray-500 shadow-sm backdrop-blur md:bottom-8 dark:border-gray-800 dark:bg-gray-900/95 dark:text-gray-400"
+          className="pointer-events-none fixed bottom-24 left-1/2 z-40 -translate-x-1/2 rounded-full border border-line bg-canvas/95 px-3 py-1.5 text-xs text-muted shadow-sm backdrop-blur md:bottom-8"
         >
           <kbd className="kbd">{pendingKey}</kbd>
           <span className="ml-2">waiting for a key…</span>

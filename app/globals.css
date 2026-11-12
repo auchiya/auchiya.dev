@@ -1,18 +1,7 @@
 @import "tailwindcss";
+@import "./theme.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
-
-@theme inline {
-  --font-sans:
-    var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  --font-serif: var(--font-pt-serif), Georgia, ui-serif, Cambria, "Times New Roman", Times, serif;
-  --font-display: var(--font-archivo), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-
-  --color-primary-400: #4ade80;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;
-}
 
 @layer base {
   html {
@@ -26,16 +15,11 @@
 
   body {
     margin: 0;
-    background-color: var(--color-white);
-    color: var(--color-gray-800);
+    background-color: var(--canvas);
+    color: var(--ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  html.dark body {
-    background-color: var(--color-gray-900);
-    color: var(--color-gray-100);
   }
 
   a {
@@ -44,7 +28,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-primary-500);
+    outline: 2px solid var(--ring);
     outline-offset: 3px;
   }
 
@@ -65,7 +49,7 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--color-primary-500) 25%, transparent);
+    background-color: color-mix(in oklab, var(--accent) 25%, transparent);
   }
 }
 
@@ -86,10 +70,10 @@
     z-index: 100;
     transform: translateY(-200%);
     border-radius: 0.375rem;
-    background-color: var(--color-gray-900);
+    background-color: var(--ink);
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
-    color: var(--color-white);
+    color: var(--canvas);
     transition: transform 150ms ease;
   }
 
@@ -103,19 +87,13 @@
     align-items: center;
     justify-content: center;
     border-radius: 0.25rem;
-    border: 1px solid var(--color-gray-300);
-    background-color: var(--color-gray-50);
+    border: 1px solid var(--line);
+    background-color: var(--raised);
     padding: 0.1rem 0.35rem;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.7rem;
     line-height: 1.4;
-    color: var(--color-gray-600);
-  }
-
-  .dark .kbd {
-    border-color: var(--color-gray-700);
-    background-color: var(--color-gray-800);
-    color: var(--color-gray-300);
+    color: var(--muted);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -129,7 +107,7 @@
     font-family: var(--font-serif);
     font-size: 1.125rem;
     line-height: 1.75;
-    color: var(--color-gray-700);
+    color: var(--muted);
   }
 
   .prose > * + * {
@@ -141,7 +119,7 @@
   }
 
   .prose a {
-    color: var(--color-primary-600);
+    color: var(--accent-ink);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
@@ -154,7 +132,7 @@
 
   .prose strong {
     font-weight: 600;
-    color: var(--color-gray-900);
+    color: var(--ink);
   }
 
   .prose h1,
@@ -165,7 +143,7 @@
     font-size: 17px;
     font-weight: 600;
     line-height: 1.35;
-    color: var(--color-gray-900);
+    color: var(--ink);
   }
 
   .prose ul,
@@ -186,19 +164,19 @@
   }
 
   .prose li::marker {
-    color: var(--color-gray-400);
+    color: var(--subtle);
   }
 
   .prose code {
     font-family: var(--font-mono);
     font-size: 0.875em;
-    color: var(--color-pink-500);
+    color: var(--accent-ink);
   }
 
   .prose pre {
     overflow-x: auto;
-    border: 1px solid var(--color-gray-200);
-    background-color: #fafafa;
+    border: 1px solid var(--line);
+    background-color: var(--raised);
     padding: 1rem 1.25rem;
     font-size: 0.875rem;
     line-height: 1.6;
@@ -210,14 +188,14 @@
   }
 
   .prose blockquote {
-    border-left: 3px solid var(--color-gray-200);
+    border-left: 3px solid var(--line);
     padding-left: 1rem;
     font-style: italic;
-    color: var(--color-gray-600);
+    color: var(--muted);
   }
 
   .prose hr {
-    border-color: var(--color-gray-200);
+    border-color: var(--line);
   }
 
   .prose img {
@@ -236,39 +214,5 @@
     .prose h4 {
       font-size: 15px;
     }
-  }
-
-  .dark .prose {
-    color: var(--color-gray-300);
-  }
-
-  .dark .prose a {
-    color: var(--color-primary-400);
-  }
-
-  .dark .prose strong,
-  .dark .prose h1,
-  .dark .prose h2,
-  .dark .prose h3,
-  .dark .prose h4 {
-    color: var(--color-white);
-  }
-
-  .dark .prose li::marker {
-    color: var(--color-gray-600);
-  }
-
-  .dark .prose pre {
-    border-color: var(--color-gray-800);
-    background-color: #0e121a;
-  }
-
-  .dark .prose blockquote {
-    border-color: var(--color-gray-700);
-    color: var(--color-gray-400);
-  }
-
-  .dark .prose hr {
-    border-color: var(--color-gray-800);
   }
 }
