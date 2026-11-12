@@ -31,6 +31,7 @@ describe("normalizeKey", () => {
   it("keeps named keys intact", () => {
     expect(normalizeKey(keyboardEvent({ code: "Escape" }))).toBe("Escape");
     expect(normalizeKey(keyboardEvent({ code: "Enter" }))).toBe("Enter");
+    expect(normalizeKey(keyboardEvent({ code: "ArrowDown", key: "ArrowDown" }))).toBe("ArrowDown");
   });
 
   it("ignores IME composition", () => {
@@ -80,6 +81,13 @@ describe("resolveKey", () => {
     });
     expect(resolveKey(null, "?")).toEqual({ kind: "action", action: { type: "help" } });
     expect(resolveKey(null, "t")).toEqual({ kind: "action", action: { type: "theme" } });
+  });
+
+  it("maps arrow keys to the same actions as h/j/k/l", () => {
+    expect(resolveKey(null, "ArrowDown")).toEqual(resolveKey(null, "j"));
+    expect(resolveKey(null, "ArrowUp")).toEqual(resolveKey(null, "k"));
+    expect(resolveKey(null, "ArrowLeft")).toEqual(resolveKey(null, "h"));
+    expect(resolveKey(null, "ArrowRight")).toEqual(resolveKey(null, "l"));
   });
 
   it("ignores unbound keys", () => {

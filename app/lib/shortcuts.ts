@@ -60,12 +60,16 @@ export const gotoActions: Record<string, ShortcutAction> = {
 export const singleKeyActions: Record<string, ShortcutAction> = {
   j: { type: "focus-item", direction: 1 },
   k: { type: "focus-item", direction: -1 },
+  ArrowDown: { type: "focus-item", direction: 1 },
+  ArrowUp: { type: "focus-item", direction: -1 },
   d: { type: "scroll", to: "half-down" },
   u: { type: "scroll", to: "half-up" },
   G: { type: "scroll", to: "bottom" },
   o: { type: "open" },
   h: { type: "back" },
   l: { type: "forward" },
+  ArrowLeft: { type: "back" },
+  ArrowRight: { type: "forward" },
   t: { type: "theme" },
   "?": { type: "help" },
   Escape: { type: "clear" },
@@ -113,8 +117,8 @@ export const shortcutGroups: ShortcutGroup[] = [
   {
     title: "Move",
     hints: [
-      { keys: ["j"], description: "Next item / scroll down" },
-      { keys: ["k"], description: "Previous item / scroll up" },
+      { keys: ["j / ↓"], description: "Next item / scroll down" },
+      { keys: ["k / ↑"], description: "Previous item / scroll up" },
       { keys: ["d"], description: "Half page down" },
       { keys: ["u"], description: "Half page up" },
       { keys: ["G"], description: "Bottom of page" },
@@ -126,8 +130,8 @@ export const shortcutGroups: ShortcutGroup[] = [
     hints: [
       { keys: ["Tab"], description: "Move focus forward" },
       { keys: ["Shift", "Tab"], description: "Move focus back" },
-      { keys: ["h"], description: "Back" },
-      { keys: ["l"], description: "Forward" },
+      { keys: ["h / ←"], description: "Back" },
+      { keys: ["l / →"], description: "Forward" },
       { keys: ["t"], description: "Toggle theme" },
       { keys: ["?"], description: "Keyboard shortcuts" },
       { keys: ["Esc"], description: "Cancel / clear focus" },
