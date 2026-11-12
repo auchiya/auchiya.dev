@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { nav } from "@/content/site";
+import { PREFIX } from "@/app/lib/shortcuts";
 
 export function SidebarNav() {
   const pathname = usePathname() ?? "/";
@@ -21,7 +22,7 @@ export function SidebarNav() {
               key={item.href}
               href={item.href}
               aria-current={active ? "page" : undefined}
-              className={`flex flex-1 flex-col items-center gap-1 py-2.5 text-xs transition-colors md:flex-none md:flex-row md:gap-0 md:py-1 md:text-sm md:transition-opacity md:hover:opacity-60 ${
+              className={`group flex flex-1 flex-col items-center gap-1 py-2.5 text-xs transition-colors md:flex-none md:flex-row md:gap-0 md:py-1 md:text-sm md:transition-opacity md:hover:opacity-60 ${
                 active
                   ? "text-primary-600 dark:text-primary-400"
                   : "text-gray-500 dark:text-gray-400"
@@ -34,6 +35,12 @@ export function SidebarNav() {
                 }`}
               />
               <span>{item.label}</span>
+              <span
+                aria-hidden="true"
+                className="ml-2 hidden font-mono text-[10px] tracking-tight text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 md:inline dark:text-gray-500"
+              >
+                {PREFIX} {item.shortcut}
+              </span>
             </Link>
           );
         })}

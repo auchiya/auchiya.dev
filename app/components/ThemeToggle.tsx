@@ -1,34 +1,42 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { isDark, onThemeChange, setTheme } from "@/app/lib/theme";
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const root = document.documentElement;
-    setDark(root.classList.contains("dark"));
+    setDark(isDark());
 
-    if (localStorage.getItem("theme")) {
-      return;
+    const unsubscribe = onThemeChange(setDark);
+
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem("theme");
+    } catch {
+      // Ignore storage failures (private mode, disabled storage).
+    }
+
+    if (stored) {
+      return unsubscribe;
     }
 
     const query = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = (event: MediaQueryListEvent) => {
-      root.classList.toggle("dark", event.matches);
-      setDark(event.matches);
+      setTheme(event.matches, { persist: false });
     };
 
     query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
+
+    return () => {
+      unsubscribe();
+      query.removeEventListener("change", onChange);
+    };
   }, []);
 
   function toggle() {
-    const root = document.documentElement;
-    const next = !root.classList.contains("dark");
-    root.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
-    setDark(next);
+    setTheme(!isDark());
   }
 
   return (
