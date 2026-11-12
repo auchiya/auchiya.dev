@@ -78,7 +78,7 @@ jobs:
         id: preview
         run: |
           set -o pipefail
-          output="$(vpx @vinext/cloudflare previews deploy 2>&1)"
+          output="$(vpx cf previews deploy 2>&1)" || true
           printf '%s\n' "$output"
           preview_url="$(printf '%s' "$output" | jq -er '.preview_urls[0]' 2>/dev/null || true)"
           if [ -n "$preview_url" ]; then
