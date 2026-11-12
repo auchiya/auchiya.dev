@@ -84,7 +84,7 @@ jobs:
           github.event_name == 'pull_request' ||
           (github.event_name == 'workflow_dispatch' && inputs.environment == 'preview')
         id: preview
-        run: vpx @vinext/cloudflare deploy --preview-name pr
+        run: vpx @vinext/cloudflare previews deploy
         # run: |
         #   set -o pipefail
         #   output="$(vpx cf previews deploy 2>&1)" || true
