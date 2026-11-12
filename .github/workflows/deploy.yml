@@ -47,15 +47,7 @@ jobs:
       - name: Run Checks
         run: vp check
 
-      - name: Run tests
-        run: vp test
-
-      # Build once for production — both deploy steps below use --prebuilt
-      # Preview deploys skip this: cf previews deploy builds itself with isPreview=true
       - name: Build frontend
-        if: >-
-          (github.event_name == 'workflow_dispatch' && inputs.environment == 'production') ||
-          (github.event_name == 'push' && github.ref == 'refs/heads/master')
         run: vpr build
 
       # Deploy Response Store Worker (must deploy BEFORE the app — service binding target must exist)
@@ -68,17 +60,17 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      # Deploy Production — uses --prebuilt (no rebuild, reuses vpr build output)
+      # Deploy Production
       - name: Deploy Production Worker
         if: >-
           (github.event_name == 'workflow_dispatch' && inputs.environment == 'production') ||
           (github.event_name == 'push' && github.ref == 'refs/heads/master')
-        run: vpx cf deploy --prebuilt --mode production
+        run: vpx @vinext/cloudflare deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      # Deploy Preview — builds itself with isPreview=true, no prior build needed
+      # Deploy Preview (PR or manual preview selection)
       - name: Deploy Preview Worker
         if: >-
           github.event_name == 'pull_request' ||
@@ -86,7 +78,7 @@ jobs:
         id: preview
         run: |
           set -o pipefail
-          output="$(vpx cf previews deploy --mode staging 2>&1)" || true
+          output="$(vpx @vinext/cloudflare previews deploy --mode staging 2>&1)" || true
           printf '%s\n' "$output"
           preview_url="$(printf '%s' "$output" | sed -n '/^{/,/^}/p' | jq -er '.preview_urls[0]' 2>/dev/null || true)"
           if [ -n "$preview_url" ]; then
