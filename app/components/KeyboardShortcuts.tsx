@@ -247,7 +247,7 @@ export function KeyboardShortcutsProvider({ children }: { children: ReactNode })
             event.currentTarget.close();
           }
         }}
-        className="m-auto max-h-[min(85vh,40rem)] w-[min(92vw,44rem)] overflow-y-auto rounded-lg border border-line bg-surface p-6 text-left shadow-xl backdrop:bg-prussian-500/50 dark:backdrop:bg-prussian-100/70"
+        className="m-auto max-h-[min(85vh,40rem)] w-[min(92vw,44rem)] overflow-y-auto rounded-lg border border-line bg-surface p-6 text-left shadow-xl backdrop:bg-overlay"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
