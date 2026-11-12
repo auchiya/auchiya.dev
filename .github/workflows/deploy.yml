@@ -80,7 +80,7 @@ jobs:
           set -o pipefail
           output="$(vpx @vinext/cloudflare previews deploy --mode staging 2>&1)" || true
           printf '%s\n' "$output"
-          preview_url="$(printf '%s' "$output" | jq -er '.preview_urls[0]' 2>/dev/null || true)"
+          preview_url="$(printf '%s' "$output" | sed -n '/^{/,/^}/p' | jq -er '.preview_urls[0]' 2>/dev/null || true)"
           if [ -n "$preview_url" ]; then
             echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
           fi
