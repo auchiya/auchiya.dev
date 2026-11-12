@@ -6,7 +6,7 @@ export function Logo() {
     <Link
       href="/"
       aria-label={`${site.name} home`}
-      className="display flex h-9 w-9 items-center justify-center rounded-full bg-primary-600 text-[13px] tracking-widest text-white transition-opacity hover:opacity-80 dark:bg-primary-500 dark:text-gray-900"
+      className="display flex h-9 w-9 items-center justify-center rounded-full bg-accent-ink text-[13px] tracking-widest text-on-accent transition-opacity hover:opacity-80"
     >
       {site.monogram}
     </Link>

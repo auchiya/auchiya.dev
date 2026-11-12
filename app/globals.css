@@ -2,6 +2,59 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  /* Palette */
+  --color-prussian-100: #020308;
+  --color-prussian-200: #040710;
+  --color-prussian-300: #060a18;
+  --color-prussian-400: #080e21;
+  --color-prussian-500: #0a1128;
+  --color-prussian-600: #1d3172;
+  --color-prussian-700: #2f50bc;
+  --color-prussian-800: #6c86da;
+  --color-prussian-900: #b6c2ed;
+
+  --color-navy-100: #000610;
+  --color-navy-200: #000c21;
+  --color-navy-300: #001231;
+  --color-navy-400: #001841;
+  --color-navy-500: #001f54;
+  --color-navy-600: #003da7;
+  --color-navy-700: #005dfd;
+  --color-navy-800: #5492ff;
+  --color-navy-900: #a9c9ff;
+
+  --color-yale-100: #010d18;
+  --color-yale-200: #011930;
+  --color-yale-300: #022648;
+  --color-yale-400: #02335f;
+  --color-yale-500: #034078;
+  --color-yale-600: #0567c3;
+  --color-yale-700: #1c8ef9;
+  --color-yale-800: #68b4fb;
+  --color-yale-900: #b3d9fd;
+
+  --color-cerulean-100: #041a20;
+  --color-cerulean-200: #073440;
+  --color-cerulean-300: #0b4e60;
+  --color-cerulean-400: #0e6881;
+  --color-cerulean-500: #1282a2;
+  --color-cerulean-600: #18b2dc;
+  --color-cerulean-700: #4cc9eb;
+  --color-cerulean-800: #88dbf2;
+  --color-cerulean-900: #c3edf8;
+
+  --color-paper-100: #512814;
+  --color-paper-200: #a25128;
+  --color-paper-300: #d68359;
+  --color-paper-400: #eabfaa;
+  --color-paper-500: #fefcfb;
+  --color-paper-600: #fefdfc;
+  --color-paper-700: #fefdfd;
+  --color-paper-800: #fffefd;
+  --color-paper-900: #fffefe;
+}
+
 @theme inline {
   --font-sans:
     var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -9,9 +62,45 @@
   --font-serif: var(--font-pt-serif), Georgia, ui-serif, Cambria, "Times New Roman", Times, serif;
   --font-display: var(--font-archivo), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --color-primary-400: #4ade80;
-  --color-primary-500: #22c55e;
-  --color-primary-600: #16a34a;
+  /* Semantic colors */
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-on-accent: var(--on-accent);
+}
+
+:root {
+  --canvas: var(--color-paper-500);
+  --surface: var(--color-paper-600);
+  --raised: color-mix(in oklab, var(--color-prussian-500) 5%, var(--color-paper-500));
+  --ink: var(--color-prussian-500);
+  --muted: color-mix(in oklab, var(--color-prussian-500) 68%, var(--color-paper-500));
+  --subtle: color-mix(in oklab, var(--color-prussian-500) 45%, var(--color-paper-500));
+  --line: color-mix(in oklab, var(--color-prussian-500) 12%, transparent);
+  --accent: var(--color-cerulean-500);
+  --accent-ink: var(--color-yale-600);
+  --on-accent: var(--color-paper-500);
+  --ring: var(--color-cerulean-500);
+}
+
+.dark {
+  --canvas: var(--color-prussian-500);
+  --surface: color-mix(in oklab, var(--color-prussian-500) 80%, var(--color-yale-500));
+  --raised: var(--color-prussian-400);
+  --ink: var(--color-paper-500);
+  --muted: color-mix(in oklab, var(--color-paper-500) 70%, var(--color-prussian-500));
+  --subtle: color-mix(in oklab, var(--color-paper-500) 48%, var(--color-prussian-500));
+  --line: color-mix(in oklab, var(--color-paper-500) 15%, transparent);
+  --accent: var(--color-cerulean-600);
+  --accent-ink: var(--color-cerulean-700);
+  --on-accent: var(--color-prussian-500);
+  --ring: var(--color-cerulean-700);
 }
 
 @layer base {
@@ -26,16 +115,11 @@
 
   body {
     margin: 0;
-    background-color: var(--color-white);
-    color: var(--color-gray-800);
+    background-color: var(--canvas);
+    color: var(--ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  html.dark body {
-    background-color: var(--color-gray-900);
-    color: var(--color-gray-100);
   }
 
   a {
@@ -44,7 +128,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-primary-500);
+    outline: 2px solid var(--ring);
     outline-offset: 3px;
   }
 
@@ -65,7 +149,7 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--color-primary-500) 25%, transparent);
+    background-color: color-mix(in oklab, var(--accent) 25%, transparent);
   }
 }
 
@@ -86,10 +170,10 @@
     z-index: 100;
     transform: translateY(-200%);
     border-radius: 0.375rem;
-    background-color: var(--color-gray-900);
+    background-color: var(--ink);
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
-    color: var(--color-white);
+    color: var(--canvas);
     transition: transform 150ms ease;
   }
 
@@ -103,19 +187,13 @@
     align-items: center;
     justify-content: center;
     border-radius: 0.25rem;
-    border: 1px solid var(--color-gray-300);
-    background-color: var(--color-gray-50);
+    border: 1px solid var(--line);
+    background-color: var(--raised);
     padding: 0.1rem 0.35rem;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.7rem;
     line-height: 1.4;
-    color: var(--color-gray-600);
-  }
-
-  .dark .kbd {
-    border-color: var(--color-gray-700);
-    background-color: var(--color-gray-800);
-    color: var(--color-gray-300);
+    color: var(--muted);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -129,7 +207,7 @@
     font-family: var(--font-serif);
     font-size: 1.125rem;
     line-height: 1.75;
-    color: var(--color-gray-700);
+    color: var(--muted);
   }
 
   .prose > * + * {
@@ -141,7 +219,7 @@
   }
 
   .prose a {
-    color: var(--color-primary-600);
+    color: var(--accent-ink);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
@@ -154,7 +232,7 @@
 
   .prose strong {
     font-weight: 600;
-    color: var(--color-gray-900);
+    color: var(--ink);
   }
 
   .prose h1,
@@ -165,7 +243,7 @@
     font-size: 17px;
     font-weight: 600;
     line-height: 1.35;
-    color: var(--color-gray-900);
+    color: var(--ink);
   }
 
   .prose ul,
@@ -186,19 +264,19 @@
   }
 
   .prose li::marker {
-    color: var(--color-gray-400);
+    color: var(--subtle);
   }
 
   .prose code {
     font-family: var(--font-mono);
     font-size: 0.875em;
-    color: var(--color-pink-500);
+    color: var(--accent-ink);
   }
 
   .prose pre {
     overflow-x: auto;
-    border: 1px solid var(--color-gray-200);
-    background-color: #fafafa;
+    border: 1px solid var(--line);
+    background-color: var(--raised);
     padding: 1rem 1.25rem;
     font-size: 0.875rem;
     line-height: 1.6;
@@ -210,14 +288,14 @@
   }
 
   .prose blockquote {
-    border-left: 3px solid var(--color-gray-200);
+    border-left: 3px solid var(--line);
     padding-left: 1rem;
     font-style: italic;
-    color: var(--color-gray-600);
+    color: var(--muted);
   }
 
   .prose hr {
-    border-color: var(--color-gray-200);
+    border-color: var(--line);
   }
 
   .prose img {
@@ -236,39 +314,5 @@
     .prose h4 {
       font-size: 15px;
     }
-  }
-
-  .dark .prose {
-    color: var(--color-gray-300);
-  }
-
-  .dark .prose a {
-    color: var(--color-primary-400);
-  }
-
-  .dark .prose strong,
-  .dark .prose h1,
-  .dark .prose h2,
-  .dark .prose h3,
-  .dark .prose h4 {
-    color: var(--color-white);
-  }
-
-  .dark .prose li::marker {
-    color: var(--color-gray-600);
-  }
-
-  .dark .prose pre {
-    border-color: var(--color-gray-800);
-    background-color: #0e121a;
-  }
-
-  .dark .prose blockquote {
-    border-color: var(--color-gray-700);
-    color: var(--color-gray-400);
-  }
-
-  .dark .prose hr {
-    border-color: var(--color-gray-800);
   }
 }

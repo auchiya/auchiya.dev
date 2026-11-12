@@ -36,14 +36,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return (
     <article>
       <div className="mb-12">
-        <Link
-          href="/projects"
-          className="text-sm text-gray-400 transition hover:text-gray-600 dark:hover:text-gray-300"
-        >
+        <Link href="/projects" className="text-sm text-subtle transition hover:text-muted">
           ← Projects
         </Link>
         <h1 className="display mt-5 text-[22px]">{project.title}</h1>
-        <p className="mt-3 text-sm text-gray-400">{project.year}</p>
+        <p className="mt-3 text-sm text-subtle">{project.year}</p>
       </div>
 
       <Prose>

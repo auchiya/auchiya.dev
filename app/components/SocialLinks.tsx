@@ -41,7 +41,7 @@ export function SocialLinks() {
           title={social.label}
           target={social.href.startsWith("mailto:") ? undefined : "_blank"}
           rel="noopener noreferrer"
-          className="text-gray-400 transition hover:text-gray-600 hover:opacity-80 dark:text-gray-500 dark:hover:text-gray-300"
+          className="text-subtle transition hover:text-muted hover:opacity-80"
         >
           <Icon icon={social.icon} />
         </a>
