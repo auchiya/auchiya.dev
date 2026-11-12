@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { site } from "@/content/site";
 import { Logo } from "./Logo";
 import { SidebarNav } from "./SidebarNav";
+import { SiteName } from "./SiteName";
 
 export function Sidebar() {
   return (
@@ -10,7 +10,9 @@ export function Sidebar() {
         <div className="mb-6 flex items-center gap-3 md:mb-20 md:block">
           <Logo />
           <h1 className="display text-[19px] md:hidden">
-            <Link href="/">{site.name}</Link>
+            <Link href="/">
+              <SiteName />
+            </Link>
           </h1>
         </div>
         <SidebarNav />

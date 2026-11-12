@@ -6,9 +6,11 @@ export function Logo() {
     <Link
       href="/"
       aria-label={`${site.name} home`}
-      className="display flex h-9 w-9 items-center justify-center rounded-full bg-accent-ink text-[13px] tracking-widest text-on-accent transition-opacity hover:opacity-80"
+      className="display flex h-9 w-9 items-center justify-center rounded-full bg-accent-ink text-[12px] leading-none tracking-tight text-on-accent transition-opacity hover:opacity-80"
     >
-      {site.monogram}
+      <span lang="ja" aria-hidden="true">
+        {site.lastNameKanji}
+      </span>
     </Link>
   );
 }

@@ -25,7 +25,7 @@ const archivo = Archivo({
 
 export const metadata: Metadata = {
   title: {
-    default: "Agustin Uchiya — Software Engineer",
+    default: "Agustin Uchiya (打矢 アグスティン) — Software Engineer",
     template: "%s — Agustin Uchiya",
   },
   description: "Personal site of Agustin Uchiya, a full-stack software engineer.",

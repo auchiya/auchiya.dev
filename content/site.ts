@@ -13,9 +13,10 @@ export type SocialLink = {
 
 export const site = {
   name: "Agustin Uchiya",
-  monogram: "AU",
   lastNameKanji: "打矢",
-  nameKatakana: "アグスティン・打矢",
+  nameKatakana: "アグスティン・ウチヤ",
+  /** Japanese-order display name: surname in kanji, given name in katakana. */
+  nameJapanese: "打矢 アグスティン",
   role: "Full-Stack Engineer",
   location: "Barcelona, Spain",
   email: "you@auchiya.dev",
