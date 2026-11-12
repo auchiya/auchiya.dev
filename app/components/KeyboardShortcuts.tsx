@@ -19,6 +19,7 @@ import {
   shortcutGroups,
   type ShortcutAction,
 } from "@/app/lib/shortcuts";
+import { navigateHistory } from "@/app/lib/history-navigation";
 import { toggleTheme } from "@/app/lib/theme";
 
 type KeyboardShortcutsContextValue = {
@@ -136,10 +137,10 @@ export function KeyboardShortcutsProvider({ children }: { children: ReactNode })
           break;
         }
         case "back":
-          window.history.back();
+          navigateHistory("back");
           break;
         case "forward":
-          window.history.forward();
+          navigateHistory("forward");
           break;
         case "theme":
           toggleTheme();

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { KeyboardShortcutsProvider } from "./KeyboardShortcuts";
+import { PageTransition } from "./PageTransition";
 import { RouteFocus } from "./RouteFocus";
 import { Sidebar } from "./Sidebar";
 import { SiteFooter } from "./SiteFooter";
@@ -20,7 +21,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <SiteName />
             </Link>
           </h1>
-          <div className="flex-auto">{children}</div>
+          <div className="flex-auto">
+            <PageTransition>{children}</PageTransition>
+          </div>
           <SiteFooter />
         </main>
       </div>
