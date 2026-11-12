@@ -70,6 +70,14 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
+      - name: Build preview
+        if: >-
+          github.event_name == 'pull_request' ||
+          (github.event_name == 'workflow_dispatch' && inputs.environment == 'preview')
+        run: vpr build
+        env:
+          CLOUDFLARE_PREVIEW_BUILD: "true" # or whatever env var the plugin reads
+
       # Deploy Preview (PR or manual preview selection)
       - name: Deploy Preview Worker
         if: >-
