@@ -13,7 +13,7 @@ type MiscModule = {
 
 const modules = import.meta.glob<MiscModule>("./*.mdx", { eager: true });
 
-// Alphabetical by title, regardless of the order files are discovered in.
+// Manual order first, then newest, regardless of the order files are discovered in.
 export const misc: MiscEntry[] = Object.entries(modules)
   .map(([path, module]) => {
     if (!module.meta) {
@@ -26,7 +26,12 @@ export const misc: MiscEntry[] = Object.entries(modules)
       Body: module.default,
     };
   })
-  .sort((a, b) => a.title.localeCompare(b.title));
+  .sort(
+    (a, b) =>
+      (a.order ?? Number.POSITIVE_INFINITY) - (b.order ?? Number.POSITIVE_INFINITY) ||
+      b.date.localeCompare(a.date) ||
+      a.title.localeCompare(b.title),
+  );
 
 export function getMiscEntry(slug: string) {
   return misc.find((entry) => entry.slug === slug);

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getMiscEntry, misc } from "@/content/misc";
 import { Prose } from "@/app/components/Prose";
+import { TagList } from "@/app/components/TagList";
+import { formatDate } from "@/app/lib/format-date";
 
 type MiscPageProps = {
   params: Promise<{ slug: string }>;
@@ -39,7 +41,12 @@ export default async function MiscEntryPage({ params }: MiscPageProps) {
           ← Misc
         </Link>
         <h1 className="display mt-5 text-[22px]">{entry.title}</h1>
-        <p className="mt-3 text-sm text-subtle">{entry.note}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-subtle">
+          <time dateTime={entry.date}>{formatDate(entry.date)}</time>
+          <span aria-hidden="true" className="h-3 w-px bg-line" />
+          <TagList tags={entry.tags} />
+        </div>
+        <p className="mt-2 text-sm text-subtle">{entry.note}</p>
       </div>
 
       <Prose>
