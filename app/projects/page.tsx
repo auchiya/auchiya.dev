@@ -16,9 +16,9 @@ function ProjectRow({ project }: { project: Project }) {
       className="text-ink transition-all hover:text-ink/70"
     >
       <div className="flex flex-col items-start pb-4 pt-3 md:flex-row md:pb-2">
-        <div className="relative top-[2px] flex-auto md:w-9/12">
+        <div className="relative top-[2px] min-w-0 flex-auto md:w-9/12">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="display text-[17px]">{project.title}</h1>
+            <h1 className="display text-[17px] [overflow-wrap:anywhere]">{project.title}</h1>
             {project.status === "live" ? <LiveBadge className="-translate-y-[1.5px]" /> : null}
           </div>
         </div>

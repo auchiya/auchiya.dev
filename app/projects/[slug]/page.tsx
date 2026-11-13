@@ -44,7 +44,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <Link href="/projects" className="text-sm text-subtle transition hover:text-muted">
           ← Projects
         </Link>
-        <h1 className="display mt-5 text-[22px]">{project.title}</h1>
+        <h1 className="display mt-5 text-[22px] [overflow-wrap:anywhere]">{project.title}</h1>
         <div className="mt-3 flex items-center gap-3 text-sm text-subtle">
           <span>{project.year}</span>
           {project.status === "live" ? <LiveBadge /> : null}

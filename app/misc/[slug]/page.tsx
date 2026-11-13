@@ -40,7 +40,7 @@ export default async function MiscEntryPage({ params }: MiscPageProps) {
         <Link href="/misc" className="text-sm text-subtle transition hover:text-muted">
           ← Misc
         </Link>
-        <h1 className="display mt-5 text-[22px]">{entry.title}</h1>
+        <h1 className="display mt-5 text-[22px] [overflow-wrap:anywhere]">{entry.title}</h1>
         <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-subtle">
           <time dateTime={entry.date}>{formatDate(entry.date)}</time>
           <span aria-hidden="true" className="h-3 w-px bg-line" />
