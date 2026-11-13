@@ -9,5 +9,6 @@ export type ProjectMeta = {
   summary: string;
   stack: string[];
   repo: string;
+  repoLabel?: string;
   links?: ProjectLink[];
 };
