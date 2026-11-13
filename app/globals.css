@@ -188,6 +188,7 @@
   }
 
   .prose blockquote {
+    margin-block: 1.5em;
     border-left: 3px solid var(--line);
     padding-left: 1rem;
     font-style: italic;
