@@ -19,7 +19,7 @@ function ProjectRow({ project }: { project: Project }) {
         <div className="relative top-[2px] flex-auto md:w-9/12">
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="display text-[17px]">{project.title}</h1>
-            {project.status === "live" ? <LiveBadge /> : null}
+            {project.status === "live" ? <LiveBadge className="-translate-y-[1.5px]" /> : null}
           </div>
         </div>
         <div className="relative top-px shrink-0 text-sm text-subtle md:w-3/12 md:pl-4">
