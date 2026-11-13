@@ -20,7 +20,8 @@ export default function Home() {
               Calculadora Solar Térmica
             </a>
             , an app I started in 2021, built from scratch, and that's now used by engineers and
-            technicians across Argentina.
+            technicians across Argentina. If you are interested I have an article{" "}
+            <Link href="/projects/solar-calculator">here</Link>
           </p>
           <p>
             I've been writing software professionally since 2016. I worked at{" "}

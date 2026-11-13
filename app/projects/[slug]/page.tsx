@@ -56,11 +56,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </p>
         <h2>Links</h2>
         <ul>
-          <li>
-            <a href={project.repo} target="_blank" rel="noreferrer">
-              {project.repoLabel ?? project.repo.replace(/^https:\/\/github\.com\//, "github.com/")}
-            </a>
-          </li>
+          {project.repo && (
+            <li>
+              <a href={project.repo} target="_blank" rel="noreferrer">
+                {project.repoLabel ??
+                  project.repo.replace(/^https:\/\/github\.com\//, "github.com/")}
+              </a>
+            </li>
+          )}
           {project.links?.map((link) => (
             <li key={link.href}>
               <a href={link.href} target="_blank" rel="noreferrer">
