@@ -3,11 +3,16 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "@/content/projects";
+import { LiveBadge } from "@/app/components/LiveBadge";
 import { Prose } from "@/app/components/Prose";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+function displayUrl(url: string) {
+  return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+}
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -40,7 +45,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           ← Projects
         </Link>
         <h1 className="display mt-5 text-[22px]">{project.title}</h1>
-        <p className="mt-3 text-sm text-subtle">{project.year}</p>
+        <div className="mt-3 flex items-center gap-3 text-sm text-subtle">
+          <span>{project.year}</span>
+          {project.status === "live" ? <LiveBadge /> : null}
+        </div>
       </div>
 
       <Prose>
@@ -56,11 +64,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </p>
         <h2>Links</h2>
         <ul>
-          <li>
-            <a href={project.repo} target="_blank" rel="noreferrer">
-              {project.repo.replace(/^https:\/\/github\.com\//, "github.com/")}
-            </a>
-          </li>
+          {project.liveUrl ? (
+            <li>
+              <a href={project.liveUrl} target="_blank" rel="noreferrer">
+                Live site ({displayUrl(project.liveUrl)})
+              </a>
+            </li>
+          ) : null}
+          {project.repo ? (
+            <li>
+              <a href={project.repo} target="_blank" rel="noreferrer">
+                {project.repoLabel ?? displayUrl(project.repo)}
+              </a>
+            </li>
+          ) : null}
           {project.links?.map((link) => (
             <li key={link.href}>
               <a href={link.href} target="_blank" rel="noreferrer">
