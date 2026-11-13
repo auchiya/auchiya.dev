@@ -12,6 +12,7 @@ export type SocialLink = {
 };
 
 export const site = {
+  url: "https://auchiya.dev",
   name: "Agustin Uchiya",
   lastNameKanji: "打矢",
   nameKatakana: "アグスティン・ウチヤ",
