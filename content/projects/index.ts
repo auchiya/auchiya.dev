@@ -28,6 +28,10 @@ export const projects: Project[] = Object.entries(modules)
   })
   .sort((a, b) => Number(b.year) - Number(a.year));
 
+export const liveProjects = projects.filter((project) => project.status === "live");
+
+export const portfolioProjects = projects.filter((project) => project.status !== "live");
+
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);
 }

@@ -249,3 +249,34 @@
     animation: none !important;
   }
 }
+
+/* Pulsing accent glow for live project badges. */
+.live-badge {
+  animation: live-glow 2.8s ease-in-out infinite;
+}
+
+.live-badge-dot {
+  box-shadow: 0 0 6px var(--accent);
+}
+
+@keyframes live-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 6px color-mix(in oklab, var(--accent) 25%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--accent) 15%, transparent);
+  }
+
+  50% {
+    box-shadow:
+      0 0 14px color-mix(in oklab, var(--accent) 55%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-badge {
+    animation: none;
+    box-shadow: 0 0 8px color-mix(in oklab, var(--accent) 30%, transparent);
+  }
+}
