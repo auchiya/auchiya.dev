@@ -55,9 +55,8 @@ export function ConsentBanner() {
       >
         <div className="space-y-2 text-muted">
           <p>
-            I use Google Analytics (Google LLC) to understand how this site is read. It stores
-            cookies and sends data to Google, possibly outside the EU. Nothing loads until you
-            accept. See the{" "}
+            This site uses Google Analytics to understand what pages people read. It stays off until
+            you accept. Details in the{" "}
             <Link href="/privacy" className="text-ink underline underline-offset-2">
               privacy policy
             </Link>
@@ -65,8 +64,7 @@ export function ConsentBanner() {
           </p>
           {current ? (
             <p className="text-subtle">
-              Analytics is currently {current === "granted" ? "on" : "off"}. You can change this
-              later from the footer.
+              Currently {current === "granted" ? "on" : "off"}. You can change this from the footer.
             </p>
           ) : null}
         </div>

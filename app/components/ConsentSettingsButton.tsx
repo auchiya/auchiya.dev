@@ -20,7 +20,7 @@ export function ConsentSettingsButton() {
       onClick={openConsentSettings}
       aria-label="Analytics cookie settings"
       title="Analytics cookie settings"
-      className="transition hover:text-muted hover:opacity-80"
+      className="transition hover:text-muted hover:opacity-80 hover:cursor-pointer"
     >
       Cookie settings
     </button>

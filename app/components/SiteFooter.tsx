@@ -7,8 +7,8 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-sm text-subtle md:w-9/12">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+    <footer className="mt-16 flex flex-col items-center gap-4 text-center text-sm text-subtle md:w-9/12 md:flex-row md:items-center md:justify-between md:text-left">
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 md:justify-start">
         <span>
           © {new Date().getFullYear()} {site.name}.
         </span>
@@ -19,7 +19,7 @@ export function SiteFooter() {
         |
         <ConsentSettingsButton />
       </div>
-      <div className="ml-auto flex items-center space-x-2">
+      <div className="flex items-center justify-center space-x-2">
         <SocialLinks />
         <ShortcutHelpButton />
         <ThemeToggle />
