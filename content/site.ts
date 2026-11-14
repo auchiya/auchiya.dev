@@ -22,6 +22,7 @@ export const site = {
   location: "Barcelona, Spain",
   email: "you@auchiya.dev",
   description: "Personal site of Agustin Uchiya, a full-stack engineer.",
+  googleTagManagerId: "GTM-NVBR8SNV",
 };
 
 export const nav: NavItem[] = [
