@@ -22,7 +22,7 @@ export function ConsentSettingsButton() {
       title="Analytics cookie settings"
       className="transition hover:text-muted hover:opacity-80"
     >
-      Cookies
+      Cookie settings
     </button>
   );
 }

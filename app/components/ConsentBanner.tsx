@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   OPEN_CONSENT_SETTINGS_EVENT,
@@ -9,19 +10,28 @@ import {
   type ConsentChoice,
 } from "@/app/lib/consent";
 
+/** Both actions use the same styling: refusing must be as easy as accepting. */
+const buttonClass = "border border-line px-3 py-1.5 text-ink transition hover:border-ink";
+
 export function ConsentBanner() {
   const [visible, setVisible] = useState(false);
+  const [current, setCurrent] = useState<ConsentChoice | null>(null);
 
   useEffect(() => {
     if (!isAnalyticsEnabled()) {
       return;
     }
 
+    setCurrent(readConsentChoice());
+
     if (readConsentChoice() === null) {
       setVisible(true);
     }
 
-    const open = () => setVisible(true);
+    const open = () => {
+      setCurrent(readConsentChoice());
+      setVisible(true);
+    };
     window.addEventListener(OPEN_CONSENT_SETTINGS_EVENT, open);
 
     return () => window.removeEventListener(OPEN_CONSENT_SETTINGS_EVENT, open);
@@ -33,6 +43,7 @@ export function ConsentBanner() {
 
   function choose(choice: ConsentChoice) {
     saveConsentChoice(choice);
+    setCurrent(choice);
     setVisible(false);
   }
 
@@ -42,23 +53,28 @@ export function ConsentBanner() {
         aria-label="Analytics consent"
         className="flex flex-col gap-3 border border-line bg-surface p-4 text-sm shadow-lg md:flex-row md:items-center md:justify-between"
       >
-        <p className="text-muted">
-          This site makes use of Google Analytics to understand how it is used. Analytics cookies
-          stay off until you accept.
-        </p>
+        <div className="space-y-2 text-muted">
+          <p>
+            I use Google Analytics (Google LLC) to understand how this site is read. It stores
+            cookies and sends data to Google, possibly outside the EU. Nothing loads until you
+            accept. See the{" "}
+            <Link href="/privacy" className="text-ink underline underline-offset-2">
+              privacy policy
+            </Link>
+            .
+          </p>
+          {current ? (
+            <p className="text-subtle">
+              Analytics is currently {current === "granted" ? "on" : "off"}. You can change this
+              later from the footer.
+            </p>
+          ) : null}
+        </div>
         <div className="flex shrink-0 justify-end gap-2">
-          <button
-            type="button"
-            onClick={() => choose("denied")}
-            className="border border-line px-3 py-1.5 text-muted transition hover:text-ink"
-          >
+          <button type="button" onClick={() => choose("denied")} className={buttonClass}>
             Decline
           </button>
-          <button
-            type="button"
-            onClick={() => choose("granted")}
-            className="bg-ink px-3 py-1.5 text-on-accent transition hover:opacity-80"
-          >
+          <button type="button" onClick={() => choose("granted")} className={buttonClass}>
             Accept
           </button>
         </div>
