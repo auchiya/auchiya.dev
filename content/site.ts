@@ -20,7 +20,14 @@ export const site = {
   nameJapanese: "打矢 アグスティン",
   role: "Full-Stack Engineer",
   location: "Barcelona, Spain",
+  /** Private address. Never rendered on the site. */
   email: "you@auchiya.dev",
+  /**
+   * Public data-protection contact. An alias forwarded to a real mailbox, so
+   * the privacy policy never publishes a personal address. Set up the routing
+   * rule before deploying.
+   */
+  privacyEmail: "contact@privacy.auchiya.dev",
   description: "Personal site of Agustin Uchiya, a full-stack engineer.",
   googleTagManagerId: "GTM-NVBR8SNV",
 };

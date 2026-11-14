@@ -26,7 +26,7 @@ export default function PrivacyPage() {
         <p>
           The data controller is <strong>{site.name}</strong>, located in {site.location} (Spain).
           You can reach me regarding data protection matters at{" "}
-          <a href={`mailto:${site.email}`}>{site.email}</a>.
+          <a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a>.
         </p>
 
         <h2>What is processed</h2>
