@@ -24,6 +24,10 @@ const containerId = JSON.stringify(site.googleTagManagerId);
  * Client-side page views are currently handled by the container's history
  * tracking. Do not add a manual `page_view` until that is disabled in GTM, or
  * every navigation will be counted twice.
+ *
+ * Custom events are declarative: components tag links with `data-gtm-*`
+ * attributes (see `app/lib/analytics.ts`) and the container reads them. Do not
+ * push events to `dataLayer` from application code.
  */
 const gtmScript = `
 (function () {

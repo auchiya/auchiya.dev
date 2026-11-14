@@ -2,17 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { liveProjects, portfolioProjects, type Project } from "@/content/projects";
 import { LiveBadge } from "@/app/components/LiveBadge";
+import { selectContentAttributes } from "@/app/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Projects",
   description: "Selected projects and things I've built.",
 };
 
-function ProjectRow({ project }: { project: Project }) {
+function ProjectRow({ project, itemList }: { project: Project; itemList: string }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
       data-keynav-item
+      {...selectContentAttributes({
+        contentType: "project",
+        contentId: project.slug,
+        itemList,
+      })}
       className="text-ink transition-all hover:text-ink/70"
     >
       <div className="flex flex-col items-start pb-4 pt-3 md:flex-row md:pb-2">
@@ -30,13 +36,21 @@ function ProjectRow({ project }: { project: Project }) {
   );
 }
 
-function ProjectSection({ title, projects }: { title: string; projects: Project[] }) {
+function ProjectSection({
+  title,
+  itemList,
+  projects,
+}: {
+  title: string;
+  itemList: string;
+  projects: Project[];
+}) {
   return (
     <section>
       <h2 className="display mb-2 text-[12px] text-subtle">{title}</h2>
       <div className="flex flex-col divide-y divide-line">
         {projects.map((project) => (
-          <ProjectRow key={project.slug} project={project} />
+          <ProjectRow key={project.slug} project={project} itemList={itemList} />
         ))}
       </div>
     </section>
@@ -46,8 +60,12 @@ function ProjectSection({ title, projects }: { title: string; projects: Project[
 export default function ProjectsPage() {
   return (
     <div data-keynav-list className="-mt-[14px] flex flex-col gap-10">
-      <ProjectSection title="Live in production" projects={liveProjects} />
-      <ProjectSection title="Portfolio" projects={portfolioProjects} />
+      <ProjectSection title="Live in production" itemList="live_projects" projects={liveProjects} />
+      <ProjectSection
+        title="Portfolio"
+        itemList="portfolio_projects"
+        projects={portfolioProjects}
+      />
     </div>
   );
 }

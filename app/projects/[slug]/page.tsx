@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { getProject, projects } from "@/content/projects";
 import { LiveBadge } from "@/app/components/LiveBadge";
 import { Prose } from "@/app/components/Prose";
+import { outboundLinkAttributes } from "@/app/lib/analytics";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -66,21 +67,48 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <ul>
           {project.liveUrl ? (
             <li>
-              <a href={project.liveUrl} target="_blank" rel="noreferrer">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                {...outboundLinkAttributes({
+                  contentType: "project",
+                  contentId: project.slug,
+                  linkType: "live",
+                })}
+              >
                 Live site ({displayUrl(project.liveUrl)})
               </a>
             </li>
           ) : null}
           {project.repo ? (
             <li>
-              <a href={project.repo} target="_blank" rel="noreferrer">
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noreferrer"
+                {...outboundLinkAttributes({
+                  contentType: "project",
+                  contentId: project.slug,
+                  linkType: "repo",
+                })}
+              >
                 {project.repoLabel ?? displayUrl(project.repo)}
               </a>
             </li>
           ) : null}
           {project.links?.map((link) => (
             <li key={link.href}>
-              <a href={link.href} target="_blank" rel="noreferrer">
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                {...outboundLinkAttributes({
+                  contentType: "project",
+                  contentId: project.slug,
+                  linkType: "related",
+                })}
+              >
                 {link.label}
               </a>
             </li>
