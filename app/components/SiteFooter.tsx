@@ -1,4 +1,5 @@
 import { site } from "@/content/site";
+import { ConsentSettingsButton } from "./ConsentSettingsButton";
 import { ShortcutHelpButton } from "./ShortcutHelpButton";
 import { SocialLinks } from "./SocialLinks";
 import { ThemeToggle } from "./ThemeToggle";
@@ -11,6 +12,7 @@ export function SiteFooter() {
       </div>
       <div className="flex items-center space-x-2">
         <SocialLinks />
+        <ConsentSettingsButton />
         <ShortcutHelpButton />
         <ThemeToggle />
       </div>
