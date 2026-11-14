@@ -255,7 +255,6 @@ export function KeyboardShortcutsProvider({ children }: { children: ReactNode })
             <h2 id="shortcut-help-title" className="display text-[16px]">
               Keyboard shortcuts
             </h2>
-            <p className="mt-1 text-sm text-muted">Shortcuts are paused while typing in a field.</p>
           </div>
           <button
             type="button"

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Archivo, Inter, PT_Serif } from "next/font/google";
 import "./globals.css";
-import { GoogleTagManager } from "./components/GoogleTagManager";
+import { Analytics } from "./components/Analytics";
+import { ConsentBanner } from "./components/ConsentBanner";
 import { SiteShell } from "./components/SiteShell";
 
 const inter = Inter({
@@ -59,7 +60,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
-        <GoogleTagManager />
+        <Analytics />
+        <ConsentBanner />
         <SiteShell>{children}</SiteShell>
       </body>
     </html>

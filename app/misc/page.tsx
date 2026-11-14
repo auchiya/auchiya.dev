@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { misc } from "@/content/misc";
 import { TagList } from "@/app/components/TagList";
+import { selectContentAttributes } from "@/app/lib/analytics";
 import { formatDate } from "@/app/lib/format-date";
 
 export const metadata: Metadata = {
@@ -17,6 +18,11 @@ export default function MiscPage() {
           key={entry.slug}
           href={`/misc/${entry.slug}`}
           data-keynav-item
+          {...selectContentAttributes({
+            contentType: "misc",
+            contentId: entry.slug,
+            itemList: "misc_entries",
+          })}
           className="text-ink transition-all hover:text-ink/70"
         >
           <div className="flex flex-col items-start pb-4 pt-3 md:flex-row md:pb-2">
