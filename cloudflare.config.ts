@@ -26,6 +26,7 @@ export default defineConfig({
     },
     observability: {
       enabled: true,
+      redactQueryString: true,
       logs: {
         enabled: true,
         invocationLogs: true,

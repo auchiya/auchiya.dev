@@ -12,7 +12,7 @@ export default function PrivacyPage() {
     <article>
       <div className="mb-12">
         <h1 className="display text-[22px] [overflow-wrap:anywhere]">Privacy Policy</h1>
-        <p className="mt-2 text-sm text-subtle">Last updated 14 November 2026.</p>
+        <p className="mt-2 text-sm text-subtle">Last updated 15 November 2026.</p>
       </div>
 
       <Prose>
@@ -47,8 +47,12 @@ export default function PrivacyPage() {
             browser.
           </li>
           <li>
-            <strong>Technical security logs:</strong> Maintained by the hosting provider
-            (Cloudflare) briefly for security, DDoS protection, and abuse prevention.
+            <strong>Technical and operational logs:</strong> Maintained by the hosting provider
+            (Cloudflare). Requests to this site record metadata such as the URL, method, response
+            status, timing, and errors. This is used for security, abuse prevention, and to diagnose
+            and monitor the site&apos;s performance and availability. No cookies or local storage
+            are involved, query strings are stripped from recorded URLs, and these records are not
+            used to identify you.
           </li>
         </ul>
 
@@ -59,8 +63,8 @@ export default function PrivacyPage() {
             withdraw at any time.
           </li>
           <li>
-            <strong>Security logs:</strong> Legitimate interest in maintaining site security and
-            availability (Article 6(1)(f) GDPR).
+            <strong>Security and operational monitoring:</strong> Legitimate interest in keeping the
+            site secure, available, and working correctly (Article 6(1)(f) GDPR).
           </li>
         </ul>
 
@@ -99,8 +103,8 @@ export default function PrivacyPage() {
         <h2>Data retention</h2>
         <p>
           Analytics events are retained in Google Analytics according to the configured property
-          settings (maximum 14 months). Your consent record expires after 12 months. Hosting
-          security logs are automatically purged by Cloudflare after a short operational period.
+          settings (maximum 14 months). Your consent record expires after 12 months. Hosting and
+          operational logs are automatically purged by Cloudflare after a few days.
         </p>
 
         <h2>Your rights</h2>
