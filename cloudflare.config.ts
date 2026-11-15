@@ -24,6 +24,19 @@ export default defineConfig({
       notFoundHandling: "none",
       runWorkerFirst: ["/*", "!/_next/static/*", "!/*/_next/static/*"],
     },
+    observability: {
+      enabled: true,
+      redactQueryString: true,
+      logs: {
+        enabled: true,
+        invocationLogs: true,
+        persist: true,
+      },
+      traces: {
+        enabled: true,
+        persist: true,
+      },
+    },
     env: {
       ...responseStore.applicationWorker.env,
       ASSETS: bindings.assets(),
