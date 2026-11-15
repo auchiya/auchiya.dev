@@ -11,7 +11,8 @@ export function SidebarNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-canvas/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:static md:border-0 md:bg-transparent md:pb-0 md:backdrop-blur-none"
+      style={{ viewTransitionName: "sidebar-nav" }}
+      className="fixed inset-x-0 bottom-0 z-40 transform-gpu border-t border-line bg-canvas pb-[env(safe-area-inset-bottom)] md:static md:border-0 md:bg-transparent md:pb-0"
     >
       <div className="flex items-stretch justify-around px-2 md:flex-col md:justify-start md:px-0 md:pr-10">
         {nav.map((item) => {
