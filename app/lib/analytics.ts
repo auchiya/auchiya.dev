@@ -9,22 +9,14 @@
  * Do not call `gtag("event", ...)` or push to `dataLayer` from components; add
  * an attribute here instead.
  *
- * Container setup that consumes them:
- *   Trigger   Click - Just Links, "Wait for Tags" enabled, fires when
- *             "Click Element" matches CSS selector `[data-gtm-event]`
- *   Variable  DOM Element, attribute name `data-gtm-event`
- *             DOM Element, attribute name `data-gtm-content-type`
- *             DOM Element, attribute name `data-gtm-content-id`
- *             DOM Element, attribute name `data-gtm-item-list`
- *   Tag       GA4 Event, event name `{{GTM - Event}}`, params
- *             `content_type`, `content_id`, `item_list_name`
+ * The container setup that consumes these attributes is documented in
+ * `docs/gtm-setup.md`. Until it is configured, the attributes are inert —
+ * enhanced measurement still records page views, scroll, and generic outbound
+ * clicks, but not which project or entry was opened.
  *
- * Register `content_type`, `content_id`, and `item_list_name` as GA4 custom
- * dimensions or they stay invisible in reports.
- *
- * Outbound clicks need no event: GA4 enhanced measurement already sends
- * `click` for them. `outboundLinkAttributes` only attaches project context so
- * a GTM click tag can report it.
+ * Register `content_id` and `link_type` (and `content_type` / `item_list_name`
+ * if not already standard) as GA4 event-scoped custom dimensions or they stay
+ * invisible in reports.
  */
 
 type ContentAttributes = {
