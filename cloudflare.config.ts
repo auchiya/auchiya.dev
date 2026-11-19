@@ -25,16 +25,16 @@ export default defineConfig({
       runWorkerFirst: ["/*", "!/_next/static/*", "!/*/_next/static/*"],
     },
     observability: {
-      enabled: true,
+      enabled: false,
       redactQueryString: true,
       logs: {
-        enabled: true,
-        invocationLogs: true,
-        persist: true,
+        enabled: false,
+        invocationLogs: false,
+        persist: false,
       },
       traces: {
-        enabled: true,
-        persist: true,
+        enabled: false,
+        persist: false,
       },
     },
     env: {
