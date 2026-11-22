@@ -58,9 +58,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         {project.screenshots?.length ? (
           <>
             <h2>Screenshots</h2>
-            {project.screenshots.map((screenshot) => (
-              <Figure key={screenshot.src} {...screenshot} />
-            ))}
+            <div className="flex flex-col gap-3">
+              {project.screenshots.map((screenshot) => (
+                <Figure key={screenshot.src} {...screenshot} />
+              ))}
+            </div>
           </>
         ) : null}
         <h2>Stack</h2>

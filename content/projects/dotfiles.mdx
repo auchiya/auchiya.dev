@@ -3,12 +3,36 @@ export const meta = {
   year: "2026",
   summary:
     "Chezmoi-managed dotfiles that keep my Neovim, Lazygit, Ghostty, and Zsh setup in sync across macOS and Windows.",
-  stack: ["Neovim", "chezmoi", "Ghostty", "Zsh"],
+  stack: ["Neovim", "Lazyvim", "chezmoi", "Ghostty", "Zsh", "Lazygit", "Rex"],
   repo: "https://github.com/auchiya/dotfiles",
+  links: [
+    {
+      label: "Chezmoi",
+      href: "https://www.chezmoi.io/",
+    },
+    {
+      label: "Ghostty",
+      href: "https://www.ghostty.org/",
+    },
+    {
+      label: "Neovim",
+      href: "https://neovim.io/",
+    },
+    {
+      label: "Lazyvim",
+      href: "https://www.lazyvim.org/",
+    },
+    {
+      label: "Lazygit",
+      href: "https://github.com/jesseduffield/lazygit",
+    },
+  ],
 };
 
 I've been using more terminal oriented tools lately.
 
 So I've saved and sync all my config in this repo to have the same development environment across the different computers I have to work on.
 
-Chezmoi-managed dotfiles that keep my Neovim, Lazygit, Ghostty, and Zsh setup in sync across macOS and Windows.
+I use Chezmoi to manage the dotfiles that keep my Neovim, Lazygit, Ghostty, and Zsh setup in sync across macOS and Windows. I really like that you can have specific OS oriented configs.
+
+Also I've been testing and using the new terminal multiplexer <a href="https://www.superlogical.com/updates/public-testing-beginning">Rex</a> instead of ghostty. Quite good experience so far but, as I'm writting (November 2026) is still in beta, I will not track the config files until the v1 is released and stable.

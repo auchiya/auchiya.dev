@@ -26,13 +26,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...projects.map((project) => ({
       url: url(`/projects/${project.slug}`),
-      changeFrequency: "yearly" as const,
+      changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
     ...misc.map((entry) => ({
       url: url(`/misc/${entry.slug}`),
       lastModified: new Date(entry.date),
-      changeFrequency: "yearly" as const,
+      changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
   ];
