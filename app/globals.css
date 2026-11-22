@@ -217,9 +217,28 @@
     border-color: var(--line);
   }
 
-  .prose img {
+  .prose img,
+  .figure-image {
+    display: block;
     max-width: 100%;
     height: auto;
+  }
+
+  .figure {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--raised);
+  }
+
+  .figure-caption {
+    border-top: 1px solid var(--line);
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--subtle);
   }
 
   @media (min-width: 768px) {
