@@ -110,7 +110,9 @@ vpx ./scripts/check-images.mts public/images/misc/filter-coffee-brew.jpg
 ```
 
 The `staged` block in `vite.config.ts` runs `check:images` for image files on
-commit. CI should run `vp run check:images` alongside `vp check` and `vp test`.
+commit. The deploy workflow also runs `vp run check:images` on every push and PR,
+before the build/deploy steps, so a leak blocks both preview and production
+deployments.
 
 Run `strip:images` once after adding new photos, then commit the cleaned files.
 

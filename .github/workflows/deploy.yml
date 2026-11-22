@@ -47,6 +47,9 @@ jobs:
       - name: Run Checks
         run: vp check
 
+      - name: Check image metadata
+        run: vp run check:images
+
       - name: Build frontend
         run: vpr build
 
