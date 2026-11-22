@@ -82,6 +82,34 @@ Plain Markdown images (`![alt](/images/misc/photo.png)`) still render, but they
 are unoptimized and have no reserved size or caption. Use `Figure` for a
 consistent result.
 
+## Metadata / privacy
+
+The optimizer strips metadata from _resized_ variants, but the original file is
+still served directly at its `/images/...` URL. GPS coordinates, camera serials,
+timestamps, and author fields would therefore be public. Two scripts keep that
+from happening:
+
+```sh
+vp run check:images              # fail on sensitive metadata
+vp run strip:images              # re-encode + strip, then verify
+vp run strip:images -- --dry-run # preview without writing
+```
+
+`strip:images` removes all EXIF, IPTC, and XMP data, then writes only the owner
+fields (`Artist`, `Copyright`, `CameraOwnerName`) as `auchiya.dev`. The check
+accepts exactly those values and rejects GPS tags, serial numbers, timestamps,
+author/contact fields, and any remaining IPTC or XMP blocks. Both scripts accept
+explicit file paths, so they also work on a subset:
+
+```sh
+vpx ./scripts/check-images.mts public/images/misc/filter-coffee-brew.jpg
+```
+
+The `staged` block in `vite.config.ts` runs `check:images` for image files on
+commit. CI should run `vp run check:images` alongside `vp check` and `vp test`.
+
+Run `strip:images` once after adding new photos, then commit the cleaned files.
+
 ## Configuration notes
 
 - `next.config.ts` restricts the image optimizer to `/images/**`, so keep
