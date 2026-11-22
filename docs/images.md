@@ -4,6 +4,10 @@ Images live in `public/images/`, are served through the Cloudflare image
 optimizer via `next/image`, and are displayed with the shared `Figure`
 component. This keeps them responsive and avoids layout shift.
 
+Clicking a `Figure` image opens a full-size lightbox (a native `<dialog>`). It
+closes with Esc, the Close button, or a click outside the image. Keyboard
+shortcuts are paused while it is open.
+
 ## Where files go
 
 ```

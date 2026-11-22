@@ -241,6 +241,106 @@
     color: var(--subtle);
   }
 
+  .figure-zoom-trigger {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: zoom-in;
+  }
+
+  .figure-zoom-trigger:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -3px;
+  }
+
+  /* showModal() leaves the page scrollable behind the top layer, so contain
+     scroll chaining in both the dialog and its backdrop. */
+  dialog:modal {
+    overscroll-behavior: contain;
+  }
+
+  dialog::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+  }
+
+  .image-lightbox {
+    width: min(100vw - 2rem, 1400px);
+    max-width: none;
+    max-height: calc(100vh - 2rem);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--canvas);
+    color: var(--ink);
+  }
+
+  .image-lightbox::backdrop {
+    background-color: var(--overlay);
+  }
+
+  .lightbox-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background-color: var(--raised);
+  }
+
+  .lightbox-image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 9rem);
+  }
+
+  .lightbox-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--line);
+    padding: 0.5rem 0.75rem;
+  }
+
+  .lightbox-caption {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--subtle);
+  }
+
+  .lightbox-close {
+    flex-shrink: 0;
+    border: 1px solid var(--line);
+    border-radius: 0.25rem;
+    background-color: var(--raised);
+    padding: 0.25rem 0.6rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: opacity 150ms ease;
+  }
+
+  .lightbox-close:hover {
+    opacity: 0.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox-close {
+      transition: none;
+    }
+  }
+
   @media (min-width: 768px) {
     .prose {
       font-size: 1rem;

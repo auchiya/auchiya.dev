@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ImageLightbox } from "./ImageLightbox";
 
 export type FigureProps = {
   /** Public URL of the image, e.g. `/images/projects/solar-calculator.png`. */
@@ -16,11 +16,8 @@ export type FigureProps = {
 };
 
 /**
- * An optimized image with an optional caption.
- *
- * Local images are served through the configured Cloudflare image optimizer,
- * so provide the original pixel dimensions via `width`/`height`. See
- * docs/images.md for usage in pages and MDX content.
+ * An optimized image with an optional caption. Clicking the image opens a
+ * full-size lightbox. See docs/images.md for usage in pages and MDX content.
  */
 export function Figure({
   src,
@@ -33,14 +30,13 @@ export function Figure({
 }: FigureProps) {
   return (
     <figure className={["figure", className].filter(Boolean).join(" ")}>
-      <Image
+      <ImageLightbox
         src={src}
         alt={alt}
         width={width}
         height={height}
+        caption={caption}
         priority={priority}
-        sizes="(min-width: 768px) 65ch, 100vw"
-        className="figure-image"
       />
       {caption ? <figcaption className="figure-caption">{caption}</figcaption> : null}
     </figure>

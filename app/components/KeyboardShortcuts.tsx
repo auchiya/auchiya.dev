@@ -180,7 +180,8 @@ export function KeyboardShortcutsProvider({ children }: { children: ReactNode })
         return;
       }
 
-      if (dialogRef.current?.open) {
+      // A modal dialog (help or image lightbox) owns the keyboard while open.
+      if (document.querySelector("dialog[open]")) {
         return;
       }
 
