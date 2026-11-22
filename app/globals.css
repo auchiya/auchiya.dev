@@ -4,6 +4,10 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Keep the layout viewport width constant so short list pages and tall
+       article pages center identically — otherwise the scrollbar appearing
+       shifts the whole centered shell (sidebar + site title) sideways. */
+    scrollbar-gutter: stable;
   }
 
   body {
