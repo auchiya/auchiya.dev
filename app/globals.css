@@ -4,6 +4,10 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Keep the layout viewport width constant so short list pages and tall
+       article pages center identically — otherwise the scrollbar appearing
+       shifts the whole centered shell (sidebar + site title) sideways. */
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -217,9 +221,187 @@
     border-color: var(--line);
   }
 
-  .prose img {
+  .prose img,
+  .figure-image {
+    display: block;
     max-width: 100%;
     height: auto;
+  }
+
+  .figure {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--raised);
+  }
+
+  .figure-caption {
+    border-top: 1px solid var(--line);
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--subtle);
+  }
+
+  .figure-zoom-trigger {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: zoom-in;
+  }
+
+  .figure-zoom-trigger:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: -3px;
+  }
+
+  .image-frame {
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .image-skeleton {
+    position: absolute;
+    inset: 0;
+    background-color: var(--raised);
+    background-image: linear-gradient(
+      100deg,
+      transparent 20%,
+      color-mix(in oklab, var(--ink) 7%, transparent) 42%,
+      transparent 64%
+    );
+    background-size: 200% 100%;
+    animation: image-shimmer 1.5s linear infinite;
+  }
+
+  .image-error {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: var(--raised);
+    color: var(--subtle);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    text-align: center;
+  }
+
+  .image-error-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .image-failed {
+    display: none;
+  }
+
+  @keyframes image-shimmer {
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .image-skeleton {
+      animation: none;
+      background-image: none;
+    }
+  }
+
+  /* showModal() leaves the page scrollable behind the top layer, so contain
+     scroll chaining in both the dialog and its backdrop. */
+  dialog:modal {
+    overscroll-behavior: contain;
+  }
+
+  dialog::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+  }
+
+  .image-lightbox {
+    width: min(100vw - 2rem, 1400px);
+    max-width: none;
+    max-height: calc(100vh - 2rem);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background-color: var(--canvas);
+    color: var(--ink);
+  }
+
+  .image-lightbox::backdrop {
+    background-color: var(--overlay);
+  }
+
+  .lightbox-stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background-color: var(--raised);
+  }
+
+  .lightbox-image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 9rem);
+  }
+
+  .lightbox-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--line);
+    padding: 0.5rem 0.75rem;
+  }
+
+  .lightbox-caption {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--subtle);
+  }
+
+  .lightbox-close {
+    flex-shrink: 0;
+    border: 1px solid var(--line);
+    border-radius: 0.25rem;
+    background-color: var(--raised);
+    padding: 0.25rem 0.6rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: opacity 150ms ease;
+  }
+
+  .lightbox-close:hover {
+    opacity: 0.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox-close {
+      transition: none;
+    }
   }
 
   @media (min-width: 768px) {

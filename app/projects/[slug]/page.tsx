@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "@/content/projects";
+import { Figure } from "@/app/components/Figure";
 import { LiveBadge } from "@/app/components/LiveBadge";
 import { Prose } from "@/app/components/Prose";
 import { outboundLinkAttributes } from "@/app/lib/analytics";
@@ -54,6 +55,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       <Prose>
         <Body />
+        {project.screenshots?.length ? (
+          <>
+            <h2>Screenshots</h2>
+            {project.screenshots.map((screenshot) => (
+              <Figure key={screenshot.src} {...screenshot} />
+            ))}
+          </>
+        ) : null}
         <h2>Stack</h2>
         <p>
           {project.stack.map((item, index) => (
