@@ -1,48 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { isDark, onThemeChange, setTheme } from "@/app/lib/theme";
+import { isDark, onThemeChange, toggleTheme } from "@/app/lib/theme";
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
     setDark(isDark());
-
-    const unsubscribe = onThemeChange(setDark);
-
-    let stored: string | null = null;
-    try {
-      stored = localStorage.getItem("theme");
-    } catch {
-      // Ignore storage failures (private mode, disabled storage).
-    }
-
-    if (stored) {
-      return unsubscribe;
-    }
-
-    const query = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = (event: MediaQueryListEvent) => {
-      setTheme(event.matches, { persist: false });
-    };
-
-    query.addEventListener("change", onChange);
-
-    return () => {
-      unsubscribe();
-      query.removeEventListener("change", onChange);
-    };
+    return onThemeChange(setDark);
   }, []);
-
-  function toggle() {
-    setTheme(!isDark());
-  }
 
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={toggleTheme}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       title={dark ? "Switch to light mode" : "Switch to dark mode"}
       className="flex h-[18px] w-[18px] items-center justify-center text-subtle transition hover:text-muted hover:opacity-80"

@@ -107,7 +107,21 @@
  * Change these values (or point them at different ramp steps) to reskin.
  * -------------------------------------------------------------------------- */
 
+/*
+ * The <meta name="color-scheme"> element is the single source of truth for
+ * both native UI and our tokens. It is set before paint by the inline script
+ * in layout.tsx; CSS maps it back to the property because a <meta> is only a
+ * presentational hint and any author CSS declaration overrides it.
+ *
+ * `light dark` (the default, when JS never runs) follows the OS preference.
+ * This branching is deliberately duplicated with the media query: the
+ * combined selector + @media approach is required for critical color tokens
+ * because container style queries are not yet a safe fallback.
+ */
 :root {
+  color-scheme: light dark;
+
+  /* Light tokens (also the no-JS / system-light state). */
   --canvas: var(--color-paper-500);
   --surface: var(--color-paper-600);
   --raised: color-mix(in oklab, var(--color-prussian-500) 5%, var(--color-paper-500));
@@ -122,21 +136,62 @@
   --accent-ink: var(--color-yale-600);
   --on-accent: var(--color-paper-500);
   --ring: var(--color-cerulean-500);
-}
 
-.dark {
-  --canvas: var(--color-prussian-500);
-  --surface: color-mix(in oklab, var(--color-prussian-500) 80%, var(--color-yale-500));
-  --raised: var(--color-prussian-400);
-  --overlay: color-mix(in oklab, var(--color-prussian-100) 70%, transparent);
+  /* Dark tokens when the OS prefers dark and there is no stored override. */
+  @media (prefers-color-scheme: dark) {
+    --canvas: var(--color-prussian-500);
+    --surface: color-mix(in oklab, var(--color-prussian-500) 80%, var(--color-yale-500));
+    --raised: var(--color-prussian-400);
+    --overlay: color-mix(in oklab, var(--color-prussian-100) 70%, transparent);
 
-  --ink: var(--color-paper-500);
-  --muted: color-mix(in oklab, var(--color-paper-500) 70%, var(--color-prussian-500));
-  --subtle: color-mix(in oklab, var(--color-paper-500) 48%, var(--color-prussian-500));
+    --ink: var(--color-paper-500);
+    --muted: color-mix(in oklab, var(--color-paper-500) 70%, var(--color-prussian-500));
+    --subtle: color-mix(in oklab, var(--color-paper-500) 48%, var(--color-prussian-500));
 
-  --line: color-mix(in oklab, var(--color-paper-500) 15%, transparent);
-  --accent: var(--color-cerulean-600);
-  --accent-ink: var(--color-cerulean-700);
-  --on-accent: var(--color-prussian-500);
-  --ring: var(--color-cerulean-700);
+    --line: color-mix(in oklab, var(--color-paper-500) 15%, transparent);
+    --accent: var(--color-cerulean-600);
+    --accent-ink: var(--color-cerulean-700);
+    --on-accent: var(--color-prussian-500);
+    --ring: var(--color-cerulean-700);
+  }
+
+  /* Pinned dark: wins over a light OS preference. */
+  &:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+
+    --canvas: var(--color-prussian-500);
+    --surface: color-mix(in oklab, var(--color-prussian-500) 80%, var(--color-yale-500));
+    --raised: var(--color-prussian-400);
+    --overlay: color-mix(in oklab, var(--color-prussian-100) 70%, transparent);
+
+    --ink: var(--color-paper-500);
+    --muted: color-mix(in oklab, var(--color-paper-500) 70%, var(--color-prussian-500));
+    --subtle: color-mix(in oklab, var(--color-paper-500) 48%, var(--color-prussian-500));
+
+    --line: color-mix(in oklab, var(--color-paper-500) 15%, transparent);
+    --accent: var(--color-cerulean-600);
+    --accent-ink: var(--color-cerulean-700);
+    --on-accent: var(--color-prussian-500);
+    --ring: var(--color-cerulean-700);
+  }
+
+  /* Pinned light: wins over a dark OS preference. */
+  &:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+
+    --canvas: var(--color-paper-500);
+    --surface: var(--color-paper-600);
+    --raised: color-mix(in oklab, var(--color-prussian-500) 5%, var(--color-paper-500));
+    --overlay: color-mix(in oklab, var(--color-prussian-500) 50%, transparent);
+
+    --ink: var(--color-prussian-500);
+    --muted: color-mix(in oklab, var(--color-prussian-500) 68%, var(--color-paper-500));
+    --subtle: color-mix(in oklab, var(--color-prussian-500) 45%, var(--color-paper-500));
+
+    --line: color-mix(in oklab, var(--color-prussian-500) 12%, transparent);
+    --accent: var(--color-cerulean-500);
+    --accent-ink: var(--color-yale-600);
+    --on-accent: var(--color-paper-500);
+    --ring: var(--color-cerulean-500);
+  }
 }
