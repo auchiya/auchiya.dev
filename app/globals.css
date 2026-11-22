@@ -1,16 +1,9 @@
 @import "tailwindcss";
 @import "./theme.css";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @layer base {
   html {
-    color-scheme: light;
     scroll-behavior: smooth;
-  }
-
-  html.dark {
-    color-scheme: dark;
   }
 
   body {
@@ -218,17 +211,20 @@
   }
 }
 
-/* Page content transitions (React <ViewTransition update="page-transition">) */
-::view-transition-group(.page-transition) {
-  animation-duration: 260ms;
-}
+/* Page content transitions (React <ViewTransition update="page-transition">).
+   Opt in to motion so reduced-motion users get the static final state. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(.page-transition) {
+    animation-duration: 260ms;
+  }
 
-::view-transition-old(.page-transition) {
-  animation: 140ms ease-out both page-transition-out;
-}
+  ::view-transition-old(.page-transition) {
+    animation: 140ms ease-out both page-transition-out;
+  }
 
-::view-transition-new(.page-transition) {
-  animation: 260ms cubic-bezier(0.2, 0, 0, 1) both page-transition-in;
+  ::view-transition-new(.page-transition) {
+    animation: 260ms cubic-bezier(0.2, 0, 0, 1) both page-transition-in;
+  }
 }
 
 @keyframes page-transition-out {
@@ -243,41 +239,14 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
-  }
-}
-
-/* Pulsing accent glow for live project badges. */
+/* Static glow for live project badges: decorative, so it does not auto-run
+   indefinitely alongside content (no pause control needed). */
 .live-badge {
-  animation: live-glow 2.8s ease-in-out infinite;
+  box-shadow:
+    0 0 8px color-mix(in oklab, var(--accent) 30%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--accent) 15%, transparent);
 }
 
 .live-badge-dot {
   box-shadow: 0 0 6px var(--accent);
-}
-
-@keyframes live-glow {
-  0%,
-  100% {
-    box-shadow:
-      0 0 6px color-mix(in oklab, var(--accent) 25%, transparent),
-      0 0 0 1px color-mix(in oklab, var(--accent) 15%, transparent);
-  }
-
-  50% {
-    box-shadow:
-      0 0 14px color-mix(in oklab, var(--accent) 55%, transparent),
-      0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .live-badge {
-    animation: none;
-    box-shadow: 0 0 8px color-mix(in oklab, var(--accent) 30%, transparent);
-  }
 }

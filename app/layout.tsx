@@ -37,26 +37,28 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * FOUC prevention only: sync the <meta> with a stored override before paint.
+ * CSS maps the meta back to `color-scheme` and all color tokens, so no class
+ * toggling (and no JS) is needed for the page to render in the right scheme.
+ * Kept inline, not module/defer, and deliberately minimal.
+ */
 const themeScript = `
 (function () {
   try {
-    var stored = localStorage.getItem("theme");
-    var dark = stored
-      ? stored === "dark"
-      : window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.classList.toggle("dark", dark);
+    var stored = localStorage.getItem("color-scheme") || localStorage.getItem("theme");
+    if (stored === "light" || stored === "dark") {
+      document.querySelector('meta[name="color-scheme"]').content = stored;
+    }
   } catch (error) {}
 })();
 `;
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${inter.variable} ${ptSerif.variable} ${archivo.variable}`}
-    >
+    <html lang="en" className={`${inter.variable} ${ptSerif.variable} ${archivo.variable}`}>
       <head>
+        <meta name="color-scheme" content="light dark" suppressHydrationWarning />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
