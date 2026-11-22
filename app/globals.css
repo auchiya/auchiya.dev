@@ -95,6 +95,31 @@
     }
   }
 
+  /* Show one of two mutually exclusive hints, based on input capability
+     rather than device identity: a precise pointer implies a keyboard is
+     available, so the "press ?" hint only appears there. */
+  .keyboard-hint {
+    display: none;
+  }
+
+  .touch-hint {
+    display: block;
+  }
+
+  @media (pointer: fine) and (hover: hover) {
+    .keyboard-hint {
+      display: block;
+    }
+
+    .touch-hint {
+      display: none;
+    }
+  }
+
+  :is(.keyboard-hint, .touch-hint) > p + p {
+    margin-top: 1.25em;
+  }
+
   .prose {
     max-width: 65ch;
     font-family: var(--font-serif);
