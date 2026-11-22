@@ -6,7 +6,9 @@ component. This keeps them responsive and avoids layout shift.
 
 Clicking a `Figure` image opens a full-size lightbox (a native `<dialog>`). It
 closes with Esc, the Close button, or a click outside the image. Keyboard
-shortcuts are paused while it is open.
+shortcuts are paused while it is open. A skeleton fills the image's space while
+it loads; a failed load shows an "Image unavailable" placeholder instead of a
+broken image.
 
 ## Where files go
 

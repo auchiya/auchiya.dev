@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type ImageLightboxProps = {
   src: string;
@@ -11,6 +11,84 @@ export type ImageLightboxProps = {
   caption?: string;
   priority?: boolean;
 };
+
+type ImageStatus = "loading" | "loaded" | "error";
+
+function StatefulImage({
+  src,
+  alt,
+  width,
+  height,
+  className,
+  sizes,
+  priority,
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  className: string;
+  sizes: string;
+  priority?: boolean;
+}) {
+  const [status, setStatus] = useState<ImageStatus>("loading");
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    setStatus("loading");
+    // A cached image may finish before React attaches onLoad/onError.
+    const image = imageRef.current;
+    if (image?.complete) {
+      setStatus(image.naturalWidth > 0 ? "loaded" : "error");
+    }
+  }, [src]);
+
+  return (
+    <span
+      className="image-frame"
+      // Reserve the image's box when it fails, since the <img> is then hidden.
+      style={
+        status === "error"
+          ? { aspectRatio: `${width} / ${height}`, width: `min(100%, ${width}px)` }
+          : undefined
+      }
+    >
+      {status === "loading" ? <span className="image-skeleton" aria-hidden="true" /> : null}
+      {status === "error" ? (
+        <span className="image-error" role="img" aria-label={`Image unavailable: ${alt}`}>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            className="image-error-icon"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <path d="m21 15-5-5L5 21" />
+            <path d="M3 3l18 18" />
+          </svg>
+          <span>Image unavailable</span>
+        </span>
+      ) : null}
+      <Image
+        ref={imageRef}
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        priority={priority}
+        sizes={sizes}
+        className={[className, status === "error" ? "image-failed" : ""].filter(Boolean).join(" ")}
+        onLoad={() => setStatus("loaded")}
+        onError={() => setStatus("error")}
+      />
+    </span>
+  );
+}
 
 /**
  * A click-to-enlarge image plus its native modal dialog.
@@ -65,14 +143,14 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
         aria-label={`View full size: ${alt}`}
         onClick={() => dialogRef.current?.showModal()}
       >
-        <Image
+        <StatefulImage
           src={src}
           alt={alt}
           width={width}
           height={height}
           priority={priority}
-          sizes="(min-width: 768px) 65ch, 100vw"
           className="figure-image"
+          sizes="(min-width: 768px) 65ch, 100vw"
         />
       </button>
 
@@ -84,13 +162,13 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
       >
         <form method="dialog" className="lightbox-inner">
           <div className="lightbox-stage">
-            <Image
+            <StatefulImage
               src={src}
               alt={alt}
               width={width}
               height={height}
-              sizes="100vw"
               className="lightbox-image"
+              sizes="100vw"
             />
           </div>
           <div className="lightbox-bar">
