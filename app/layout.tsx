@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Inter, PT_Serif } from "next/font/google";
+import { site } from "@/content/site";
 import "./globals.css";
 import { Analytics } from "./components/Analytics";
 import { ConsentBanner } from "./components/ConsentBanner";
@@ -26,12 +27,39 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
     default: "Agustin Uchiya (打矢 アグスティン) — Software Engineer",
     template: "%s — Agustin Uchiya",
   },
   description: "Personal site of Agustin Uchiya, a full-stack software engineer.",
   manifest: "/site.webmanifest",
+  // Resolved against metadataBase, so relative paths become absolute URLs.
+  // Page-level title/description are inherited into og/twitter by Next.js.
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    images: [
+      {
+        url: "/og-image.webp",
+        width: 1200,
+        height: 630,
+        type: "image/webp",
+        alt: `${site.name} — Software Engineer`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [
+      {
+        url: "/og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: `${site.name} — Software Engineer`,
+      },
+    ],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
