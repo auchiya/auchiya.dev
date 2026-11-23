@@ -38,6 +38,7 @@ export const metadata: Metadata = {
   // Page-level title/description are inherited into og/twitter by Next.js.
   openGraph: {
     type: "website",
+    url: "/",
     siteName: site.name,
     images: [
       {
