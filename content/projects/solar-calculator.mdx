@@ -1,3 +1,5 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "Solar Thermal Calculator",
   year: "2021",
@@ -17,10 +19,8 @@ export const meta = {
   liveUrl: "https://calculadorasolartermica.ar/",
   screenshots: [
     {
-      src: "/images/projects/calculadorasolartermica.ar.webp",
+      ...projectImages["calculadorasolartermica.ar"],
       alt: "calculadorasolartermica.ar screenshot",
-      width: 1725,
-      height: 984,
       caption: "calculadorasolartermica.ar screenshot",
     },
   ],

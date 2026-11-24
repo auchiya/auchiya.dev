@@ -8,7 +8,7 @@ import { imagesOptimizer } from "@vinext/cloudflare/images/images-optimizer";
 export default defineConfig({
   staged: {
     "*": "vp check --fix",
-    "public/images/**/*.{jpg,jpeg,png,webp,avif,tif,tiff,heic,heif,gif}":
+    "{public,content}/**/*.{jpg,jpeg,png,webp,avif,tif,tiff,heic,heif,gif}":
       "vpx ./scripts/check-images.mts",
   },
   fmt: {},

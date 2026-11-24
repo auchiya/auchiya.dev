@@ -1,3 +1,5 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "auchiya.dev",
   year: "2026",
@@ -8,10 +10,8 @@ export const meta = {
   repo: "https://github.com/auchiya/auchiya.dev",
   screenshots: [
     {
-      src: "/images/projects/auchiya.dev.webp",
+      ...projectImages["auchiya.dev"],
       alt: "auchiya.dev screenshot",
-      width: 1746,
-      height: 998,
       caption: "auchiya.dev screenshot",
     },
   ],
