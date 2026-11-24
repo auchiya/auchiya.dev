@@ -1,3 +1,5 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "url-shortener",
   year: "2023",
@@ -10,6 +12,13 @@ export const meta = {
     {
       label: "Client repo (github.com/auchiya/url-shortener)",
       href: "https://github.com/auchiya/url-shortener",
+    },
+  ],
+  screenshots: [
+    {
+      ...projectImages["url-shortener"],
+      alt: "url-shortener React client home page with URL and alias inputs",
+      caption: "The Link.Trim() home page of the React client.",
     },
   ],
 };

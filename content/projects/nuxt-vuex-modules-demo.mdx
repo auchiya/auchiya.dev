@@ -1,3 +1,5 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "nuxt-vuex-modules-demo",
   year: "2020",
@@ -9,6 +11,13 @@ export const meta = {
     {
       label: "Vuex and NuxtJS: get modules working (Medium)",
       href: "https://medium.com/@auchiya/vuex-and-nuxtjs-get-modules-working-f6115ae05f6f",
+    },
+  ],
+  screenshots: [
+    {
+      ...projectImages["nuxt-vuex-modules-demo"],
+      alt: "Nuxt Vuex modules demo showing root, module and nested-module stores",
+      caption: "Root, module and nested-module Vuex stores in action.",
     },
   ],
 };

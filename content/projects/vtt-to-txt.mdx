@@ -1,3 +1,5 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "VttToTxt",
   year: "2023",
@@ -5,6 +7,13 @@ export const meta = {
     "A tiny .NET CLI that turns WebVTT subtitle files into plain text by dropping a file onto the executable.",
   stack: ["C#", ".NET"],
   repo: "https://github.com/auchiya/VttToTxt",
+  screenshots: [
+    {
+      ...projectImages.vttToText,
+      alt: "VttToTxt CLI printing subtitle lines extracted from a WebVTT file",
+      caption: "Subtitle lines converted to plain text in the terminal.",
+    },
+  ],
 };
 
 A tiny .NET CLI that turns WebVTT subtitle files into plain text by dropping a file onto the executable.

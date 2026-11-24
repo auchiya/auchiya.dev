@@ -4,6 +4,11 @@ import soundsGoodCombined from "./images/sounds-good-combined.webp";
 import soundsGoodMetronome from "./images/sounds-good-metronome.webp";
 import soundsGoodTuner from "./images/sounds-good-tuner.webp";
 import soundsGoodVisualizer from "./images/sounds-good-visualizer.webp";
+import nodeBlockchain from "./images/node-blockchain.webp";
+import nuxtVuexModulesDemo from "./images/nuxt-vuex-modules-demo.webp";
+import reduxSagaWithDogs from "./images/redux-saga-with-dogs.webp";
+import urlShortener from "./images/url-shortener.webp";
+import vttToText from "./images/vttToText.webp";
 
 /**
  * Project screenshots, imported so the build emits content-hashed URLs and
@@ -22,6 +27,11 @@ export const projectImages = {
   "sounds-good-metronome": soundsGoodMetronome,
   "sounds-good-tuner": soundsGoodTuner,
   "sounds-good-visualizer": soundsGoodVisualizer,
+  "node-blockchain": nodeBlockchain,
+  "nuxt-vuex-modules-demo": nuxtVuexModulesDemo,
+  "redux-saga-with-dogs": reduxSagaWithDogs,
+  "url-shortener": urlShortener,
+  vttToText: vttToText,
 } as const;
 
 export type ProjectImageKey = keyof typeof projectImages;

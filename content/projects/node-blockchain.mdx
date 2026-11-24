@@ -1,9 +1,18 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "node-blockchain",
   year: "2021",
   summary: "A minimal blockchain node written in JavaScript to understand how blockchains work.",
   stack: ["Node.js", "JavaScript"],
   repo: "https://github.com/auchiya/node-blockchain",
+  screenshots: [
+    {
+      ...projectImages["node-blockchain"],
+      alt: "Terminal output from node-blockchain showing mined blocks and the resulting chain",
+      caption: "Mining blocks and printing the chain in the terminal.",
+    },
+  ],
 };
 
 A minimal blockchain node written in JavaScript to understand how blockchains work.
