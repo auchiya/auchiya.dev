@@ -1,3 +1,5 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "redux-saga-with-dogs",
   year: "2022",
@@ -5,6 +7,13 @@ export const meta = {
     "A React app I used to explore Redux-Saga side effects, fetching dogs from a public API.",
   stack: ["React", "Redux-Saga", "Vite"],
   repo: "https://github.com/auchiya/redux-saga-with-dogs",
+  screenshots: [
+    {
+      ...projectImages["redux-saga-with-dogs"],
+      alt: "Redux Saga with Dogs app showing a grid of dog photos and breed names",
+      caption: "Dog breeds loaded into the UI through a Redux-Saga side effect.",
+    },
+  ],
 };
 
 A React app I used to explore Redux-Saga side effects, fetching dogs from a public API.
