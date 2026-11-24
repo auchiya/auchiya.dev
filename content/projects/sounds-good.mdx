@@ -1,3 +1,5 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "sounds-good",
   year: "2026",
@@ -6,31 +8,23 @@ export const meta = {
   repo: "https://github.com/auchiya/sounds-good",
   screenshots: [
     {
-      src: "/images/projects/sounds-good-tuner.webp",
+      ...projectImages["sounds-good-tuner"],
       alt: "tuner mode screenshot",
-      width: 1746,
-      height: 998,
       caption: "tuner mode screenshot",
     },
     {
-      src: "/images/projects/sounds-good-visualizer.webp",
+      ...projectImages["sounds-good-visualizer"],
       alt: "visualizer mode screenshot",
-      width: 1746,
-      height: 998,
       caption: "visualizer mode screenshot",
     },
     {
-      src: "/images/projects/sounds-good-combined.webp",
+      ...projectImages["sounds-good-combined"],
       alt: "combined mode screenshot",
-      width: 1746,
-      height: 998,
       caption: "combined mode screenshot",
     },
     {
-      src: "/images/projects/sounds-good-metronome.webp",
+      ...projectImages["sounds-good-metronome"],
       alt: "metronome mode screenshot",
-      width: 1746,
-      height: 998,
       caption: "metronome mode screenshot",
     },
   ],

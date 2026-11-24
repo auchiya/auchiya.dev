@@ -6,7 +6,7 @@ export type ProjectLink = {
 export type ProjectStatus = "live";
 
 export type ProjectImage = {
-  /** Public URL, e.g. `/images/projects/solar-calculator-dashboard.png`. */
+  /** Hashed URL from an imported asset, e.g. `/_next/static/media/foo.1a2b3c4d.webp`. */
   src: string;
   /** Describe what the screenshot shows. */
   alt: string;

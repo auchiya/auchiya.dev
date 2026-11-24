@@ -1,7 +1,7 @@
 import { ImageLightbox } from "./ImageLightbox";
 
 export type FigureProps = {
-  /** Public URL of the image, e.g. `/images/projects/solar-calculator.png`. */
+  /** Image URL, e.g. an imported asset's `src` or a `/images/...` public path. */
   src: string;
   /** Required for accessibility. Describe what is in the image. */
   alt: string;

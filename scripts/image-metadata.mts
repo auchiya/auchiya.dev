@@ -5,8 +5,12 @@ import sharp from "sharp";
 
 /** Attribution written to every stripped image. */
 export const OWNER = "auchiya.dev";
-/** Root of all public image assets. */
-export const IMAGE_DIR = "public/images";
+/**
+ * Roots scanned for images when no explicit paths are given. Content images
+ * live next to their MDX (`content/<section>/images/`); `public/images/` is
+ * kept for any fixed-URL image that must stay public.
+ */
+export const IMAGE_DIRS = ["public/images", "content"];
 
 const IMAGE_EXTENSIONS = new Set([
   ".avif",
@@ -148,14 +152,21 @@ async function collect(directory: string, files: string[]): Promise<void> {
 }
 
 /**
- * Explicit paths come from lint-staged / CLI args; otherwise scan the image root.
+ * Explicit paths come from lint-staged / CLI args; otherwise scan the image roots.
  */
 export async function discoverImages(inputs: string[]): Promise<string[]> {
   const files: string[] = [];
 
   if (inputs.length === 0) {
-    await collect(path.resolve(IMAGE_DIR), files);
-    return files.sort();
+    for (const directory of IMAGE_DIRS) {
+      const resolved = path.resolve(directory);
+      try {
+        if ((await stat(resolved)).isDirectory()) await collect(resolved, files);
+      } catch {
+        // Optional root, e.g. public/images after every image moved to content.
+      }
+    }
+    return [...new Set(files)].sort();
   }
 
   for (const input of inputs) {
