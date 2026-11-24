@@ -1,3 +1,5 @@
+import { projectImages } from "./image-map";
+
 export const meta = {
   title: "dotfiles",
   year: "2026",
@@ -25,6 +27,13 @@ export const meta = {
     {
       label: "Lazygit",
       href: "https://github.com/jesseduffield/lazygit",
+    },
+  ],
+  screenshots: [
+    {
+      ...projectImages.dotfiles,
+      alt: "Terminal showing the config files managed by chezmoi",
+      caption: "chezmoi managed listing the Neovim, Ghostty, Lazygit and Zsh configs.",
     },
   ],
 };

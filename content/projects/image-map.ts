@@ -9,6 +9,7 @@ import nuxtVuexModulesDemo from "./images/nuxt-vuex-modules-demo.webp";
 import reduxSagaWithDogs from "./images/redux-saga-with-dogs.webp";
 import urlShortener from "./images/url-shortener.webp";
 import vttToText from "./images/vttToText.webp";
+import dotfiles from "./images/dotfiles.webp";
 
 /**
  * Project screenshots, imported so the build emits content-hashed URLs and
@@ -32,6 +33,7 @@ export const projectImages = {
   "redux-saga-with-dogs": reduxSagaWithDogs,
   "url-shortener": urlShortener,
   vttToText: vttToText,
+  dotfiles: dotfiles,
 } as const;
 
 export type ProjectImageKey = keyof typeof projectImages;
