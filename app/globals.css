@@ -236,6 +236,13 @@
     background-color: var(--raised);
   }
 
+  /* Recipe photos are decorative step-by-step shots: keep them compact so a
+     long article does not turn into a wall of full-width images. Clicking one
+     still opens the full-size lightbox. */
+  .moka-figure {
+    max-width: 10rem;
+  }
+
   .figure-caption {
     border-top: 1px solid var(--line);
     padding: 0.5rem 0.75rem;
