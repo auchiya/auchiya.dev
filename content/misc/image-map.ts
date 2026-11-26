@@ -15,7 +15,6 @@ import mokapotFlowStartClose from "./images/14-mokapot-flowStart.webp";
 import mokapotFlowing from "./images/15-mokapot-flowing.webp";
 import mokapotFlowingEnding from "./images/16-mokapot-flowingEnding.webp";
 import mokapotResultWithFoam from "./images/17-mokapot-resultWithFoam.webp";
-import mokapotResultWithoutFoam from "./images/18-mokapot-resultWithoutFoam.webp";
 import mokapotResultWithoutFoamSide from "./images/19-mokapot-resultWithoutFoam.webp";
 import mokapotBrewingResult from "./images/20-mokapot-brewingResult.webp";
 import mokapotBottomChamberAfterBrewing from "./images/21-mokapot-bottomChamberAfterBrewing.webp";
@@ -46,7 +45,6 @@ export const mokaImages = {
   "15-mokapot-flowing": mokapotFlowing,
   "16-mokapot-flowingEnding": mokapotFlowingEnding,
   "17-mokapot-resultWithFoam": mokapotResultWithFoam,
-  "18-mokapot-resultWithoutFoam": mokapotResultWithoutFoam,
   "19-mokapot-resultWithoutFoam": mokapotResultWithoutFoamSide,
   "20-mokapot-brewingResult": mokapotBrewingResult,
   "21-mokapot-bottomChamberAfterBrewing": mokapotBottomChamberAfterBrewing,
