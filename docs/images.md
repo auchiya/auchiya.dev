@@ -16,6 +16,47 @@ on-screen arrows, the Left/Right arrow keys, or vim-style `h`/`l`, and follow
 along with the `n / N` counter. Articles with a single image keep the original
 single-image view.
 
+## How the carousel collects images
+
+### Current approach: DOM discovery
+
+Each zoom trigger renders its image metadata as `data-lightbox-*` attributes.
+When a lightbox opens, it queries `[data-lightbox-trigger]` within the nearest
+`<article>` (falling back to `.prose`, then `document`), builds the gallery in
+document order, and uses the clicked trigger's position as the starting index.
+This mirrors the `data-keynav-*` pattern in `KeyboardShortcuts.tsx` and needs no
+changes to MDX or page components.
+
+**Caveat:** the gallery is scoped to the nearest `<article>`. A `Figure` placed
+outside an article — or in a second article on the same page — will not join the
+intended carousel; the fallback to `.prose`/`document` can pick up unrelated
+images. The metadata also has to survive as DOM attributes, so renaming them
+means updating both `ImageLightbox.tsx` and the query that reads them.
+
+### Alternative: React-native approach (context + registration)
+
+A more idiomatic React design is a client `LightboxProvider` that owns one
+shared `<dialog>` and a registry of images:
+
+- `Prose` (or each article page) wraps its body in the provider.
+- Each `ImageLightbox` calls `register({ src, alt, width, height, caption })` in
+  an effect, stores the returned id in a ref, and calls `open(id)` on click.
+- The provider renders the single dialog, handles prev/next over the registry,
+  and calls `unregister(id)` on unmount so client-side navigation stays clean.
+
+Tradeoffs versus the current approach:
+
+- Registration order follows effect order (DOM order for siblings), but
+  StrictMode's mount/unmount/remount cycle requires idempotent registration or
+  correct re-registration during cleanup.
+- Each registration updates provider state; with ~24 figures in the coffee
+  article that is a batch of updates during mount, and all consumers re-render.
+- It touches `ImageLightbox.tsx`, `Prose`, and both article pages, and replaces
+  one dialog per figure with one dialog per article.
+
+Worth switching if galleries need to cross article boundaries, include images
+that are not `Figure`s, or be driven from application state rather than the DOM.
+
 ## Where files go
 
 ```
