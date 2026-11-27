@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
 export type ImageLightboxProps = {
   src: string;
@@ -167,6 +167,7 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
   const [images, setImages] = useState<LightboxImage[]>([{ src, alt, width, height, caption }]);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  const [fadeFrom, setFadeFrom] = useState("1");
   const leaveTimer = useRef<number | undefined>(undefined);
 
   const go = useCallback(
@@ -180,9 +181,13 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
         return;
       }
 
-      // Fade the current image out, then swap so the next one can fade in.
+      // Start the fade-out from the image's current opacity. Interrupting a
+      // fade-in otherwise snaps it to 1 (the keyframe's fixed start) first.
+      const image = dialogRef.current?.querySelector<HTMLElement>(".lightbox-image");
+      setFadeFrom(image ? getComputedStyle(image).opacity : "1");
       setLeaving(true);
       leaveTimer.current = window.setTimeout(() => {
+        setFadeFrom("1");
         setIndex(next);
         setLeaving(false);
       }, FADE_MS);
@@ -195,6 +200,7 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
   const open = () => {
     window.clearTimeout(leaveTimer.current);
     setLeaving(false);
+    setFadeFrom("1");
     const trigger = triggerRef.current;
     if (trigger) {
       const collected = collectImages(trigger, { src, alt, width, height, caption });
@@ -298,6 +304,12 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
         ref={dialogRef}
         className="image-lightbox"
         aria-label={label}
+        style={
+          {
+            "--lightbox-fade-ms": `${FADE_MS}ms`,
+            "--lightbox-fade-from": fadeFrom,
+          } as CSSProperties
+        }
         {...({ closedby: "any" } as Record<string, string>)}
       >
         <form method="dialog" className="lightbox-inner">

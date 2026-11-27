@@ -417,6 +417,16 @@
 
   @keyframes lightbox-fade-out {
     from {
+      opacity: var(--lightbox-fade-from, 1);
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* Keep the skeleton's fade independent of the image's interrupted-fade start. */
+  @keyframes lightbox-skeleton-fade-out {
+    from {
       opacity: 1;
     }
     to {
@@ -429,16 +439,16 @@
   }
 
   .lightbox-stage .image-loaded {
-    animation: lightbox-fade-in 220ms ease both;
+    animation: lightbox-fade-in var(--lightbox-fade-ms) ease both;
   }
 
   /* Fade the current photo out before the carousel swaps in the next one. */
   .lightbox-stage .image-leaving {
-    animation: lightbox-fade-out 220ms ease both;
+    animation: lightbox-fade-out var(--lightbox-fade-ms) ease both;
   }
 
   .lightbox-stage .image-skeleton-hidden {
-    animation: lightbox-fade-out 220ms ease both;
+    animation: lightbox-skeleton-fade-out var(--lightbox-fade-ms) ease both;
   }
 
   @media (prefers-reduced-motion: reduce) {

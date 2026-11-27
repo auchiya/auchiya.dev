@@ -16,7 +16,8 @@ instant under `prefers-reduced-motion`. A failed load shows an "Image
 unavailable" placeholder instead of a broken image.
 
 Every `Figure` in the same `<article>` joins the lightbox as a carousel, in
-document order. The clicked image appears first; move between images with the
+document order. The clicked image is where the carousel starts (the counter
+shows its position, not necessarily `1 / N`); move between images with the
 on-screen arrows, the Left/Right arrow keys, or vim-style `h`/`l`, and follow
 along with the `n / N` counter. Articles with a single image keep the original
 single-image view.
