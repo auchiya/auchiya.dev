@@ -1,3 +1,6 @@
+import { Figure } from "@/app/components/Figure";
+import { mokaImages } from "./image-map";
+
 export const meta = {
   title: "Moka coffee",
   date: "2026-11-10",
@@ -20,25 +23,108 @@ export const meta = {
 - Water heater (I use a Xiaomi Smart Kettle 2 Pro, that has the temp control that I use a lot)
 - Aeropress filter (optional, I like that the coffee oils get filtered)
 
+<Figure
+  {...mokaImages["05-aeropressFilter"]}
+  alt="Aeropress filter"
+  caption="Aeropress filter"
+  className="moka-figure"
+/>
+
 ## Settings
 
 I have my Baratza grinder set in 25.
 
+<Figure
+  {...mokaImages.baratzaGrinderSetting}
+  alt="Baratza grinder setting"
+  caption="Baratza grinder set to 25"
+  className="moka-figure"
+/>
+
 First I fill the basket with the whole beans until is full without overflowing it. Depending on the batch and coffee type, it can vary from 30g to even almost 40g.
 
-> For example for the current decaf I'm drinking while writing this I've weight 38g of coffee after filling the basket. But for my morning coffee it weighs 32~33g. You will have to experiment with your coffee when opening a new bag.
+<div className="moka-figure-row">
+  <Figure
+    {...mokaImages["01-basketCoffeeMeasure"]}
+    alt="Basket filled with whole beans"
+    caption="Measuring the coffee dose"
+    className="moka-figure"
+  />
+
+<Figure
+  {...mokaImages["02-basketCoffeeMeasure_Side"]}
+  alt="Basket of whole beans seen from the side"
+  caption="Filling the basket to the top"
+  className="moka-figure"
+/>
+
+  <Figure
+    {...mokaImages["03-basketCoffeeMeasure_Angle"]}
+    alt="Basket of whole beans seen at an angle"
+    caption="Filled without overflowing"
+    className="moka-figure"
+  />
+</div>
+
+> For example for the brewing where I took the photos on this recipe, and I'm enjoying drinking while writing this, I've weight 33g of coffee after filling the basket. But for my decaf it weighs up to 38g sometimes. You will have to experiment with your coffee when opening a new bag.
+>
+> But the best way is to just measure the coffee by filling the basket. Using the scale is just an addition to keep replicating the recipe but not something required.
+
+<Figure
+  {...mokaImages["04-coffeeWeight"]}
+  alt="Coffee beans on the scale"
+  caption="Weighing the beans after filling the basket"
+  className="moka-figure"
+/>
 
 I put the beans into a little vessel, and spray water 3 to 4 times. This helps with the grinding static, search for Ross Droplet Technique (RDT).
 
 Ground the beans.
 
+<Figure
+  {...mokaImages["07-coffeeGrounded"]}
+  alt="Freshly ground coffee"
+  caption="Ground coffee"
+  className="moka-figure"
+/>
+
 Heat water to 50℃ and fill the bottom chamber with 300g of water. (just below the valve)
 
+<Figure
+  {...mokaImages["10-waterBottomChamber"]}
+  alt="Water in the moka pot bottom chamber"
+  caption="300g of water, just below the valve"
+  className="moka-figure"
+/>
+
 Fill the basket with it, and just let the coffee sit in the basket with small taps and movements. **DO NOT PUSH OR TAMP THE COFFEE**, please, just let it sit there gently. If the grounds were measured correctly in the beginning it must be the perfect amount.
+
+<div className="moka-figure-row">
+  <Figure
+    {...mokaImages["08-coffeeGrounded-basket"]}
+    alt="Ground coffee sitting in the basket"
+    caption="Grounds resting loosely in the basket"
+    className="moka-figure"
+  />
+
+  <Figure
+    {...mokaImages["09-coffeeGrounded-basketSide"]}
+    alt="Side view of the ground coffee in the basket"
+    caption="The basket is full but do not overflow"
+    className="moka-figure"
+  />
+</div>
 
 Put the basket in place.
 
 Grab the Top Chamber, and place the Aeropress filter on top of the filter plate. Spray couple of times with water so it stays centered in place.
+
+<Figure
+  {...mokaImages["06-aeropressFilter-topChamber"]}
+  alt="Aeropress filter on the moka pot top chamber"
+  caption="Filter sprayed so it stays centered"
+  className="moka-figure"
+/>
 
 Gently screw the Top Chamber on to the bottom chamber, and adjust it tight.
 
@@ -54,11 +140,50 @@ I currently use a Teka TB6415, is a convection panel. You will need to experimen
 
 I set the heat to level 6, and put a timer for 7 minutes. When the timer ends, the heat stops and I keep the moka pot using the residual heat. So it is a medium-high heat, closer to medium.
 
+<Figure
+  {...mokaImages["11-mokapot-init"]}
+  alt="Assembled moka pot before brewing"
+  caption="Ready to go on the stove"
+  className="moka-figure"
+/>
+
 At around 1~2 minutes after the coffee starts to slowly flow out the chimney
+
+<div className="moka-figure-row">
+  <Figure
+    {...mokaImages["12-mokapot-flowStart"]}
+    alt="Coffee starting to flow from the moka pot chimney"
+    caption="The first coffee comes out of the chimney"
+    className="moka-figure"
+  />
+
+  <Figure
+    {...mokaImages["13-mokapot-flowStart"]}
+    alt="Coffee flowing from the chimney"
+    caption="Flow just starting"
+    className="moka-figure"
+  />
+</div>
 
 I remove the mokapot from the heat for ~5 seconds, and turn again the heat on level 2. After the 5 seconds, put 1/3 of the moka pot base on the heat circle.
 
 Monitor the flow, it should be smooth and steady, not too fast, not too slow, **smoooooth**.
+
+<div className="moka-figure-row">
+  <Figure
+    {...mokaImages["14-mokapot-flowStart"]}
+    alt="Close view of the coffee flow from the chimney"
+    caption="A smooth, steady flow"
+    className="moka-figure"
+  />
+
+  <Figure
+    {...mokaImages["15-mokapot-flowing"]}
+    alt="Coffee flowing into the moka pot top chamber"
+    caption="Filling the top chamber"
+    className="moka-figure"
+  />
+</div>
 
 If the flow stops or gets too slow, put more surface over the heat.
 
@@ -70,6 +195,13 @@ If the flow is too fast, put less surface on the heat, or remove temporarily fro
 
 When the coffee reaches almost the top of the chimney, the fluid flow will snap for a brief moment and then start to only flow foam.
 
+<Figure
+  {...mokaImages["16-mokapot-flowingEnding"]}
+  alt="The flow ending and foam appearing at the chimney"
+  caption="The flow snaps and only foam comes out"
+  className="moka-figure"
+/>
+
 If you were paying attention, just in that instant grab the moka pot and put the base under cold water to stop the brewing.
 
 > Moka foam is not crema
@@ -78,9 +210,41 @@ If you were paying attention, just in that instant grab the moka pot and put the
 
 If there is too much foam on top, I grab a spoon and gently remove it. I don't like it since it makes the coffee bitter.
 
+<div className="moka-figure-row">
+  <Figure
+    {...mokaImages["17-mokapot-resultWithFoam"]}
+    alt="Brewed coffee with a layer of foam on top"
+    caption="Too much foam for my taste"
+    className="moka-figure"
+  />
+
+  <Figure
+    {...mokaImages["19-mokapot-resultWithoutFoam"]}
+    alt="Side view of the coffee without foam"
+    caption="Result after removing the foam"
+    className="moka-figure"
+  />
+</div>
+
 # Final Result
 
 After the brew finishes, I put the coffee into a carafe, usually the total extraction ("yield") weights 205g~210g
+
+<div className="moka-figure-row">
+  <Figure
+    {...mokaImages["20-mokapot-brewingResult"]}
+    alt="Brewed coffee in the moka pot top chamber"
+    caption="The finished brew"
+    className="moka-figure"
+  />
+
+  <Figure
+    {...mokaImages["21-mokapot-bottomChamberAfterBrewing"]}
+    alt="Water left in the bottom chamber after brewing"
+    caption="What is left in the bottom chamber"
+    className="moka-figure"
+  />
+</div>
 
 The time from the flow starting until it ends is ~10 minutes.
 
@@ -88,8 +252,43 @@ The time from the flow starting until it ends is ~10 minutes.
 
 I like coffee, but I found the moka result too strong, so I measure 80g~90g of coffee and add 200g of water at 60℃.
 
+<div className="moka-figure-row">
+  <Figure
+    {...mokaImages["22-coffeeCup"]}
+    alt="Moka coffee in a cup"
+    caption="A cup of moka coffee"
+    className="moka-figure"
+  />
+
+<Figure
+  {...mokaImages["23-coffeeCupWithWater"]}
+  alt="Adding hot water to the coffee"
+  caption="Topping up with water"
+  className="moka-figure"
+/>
+
+  <Figure
+    {...mokaImages["24-coffeeCupWithWater"]}
+    alt="The finished Americano"
+    caption="Americano, ready to drink"
+    className="moka-figure"
+  />
+</div>
+
 ## Latte
 
 30g of coffee and 270g of milk at ~55℃. I'm practicing latte art using the Subminimal NanoFoamer.
+
+## Moka pot maintenance
+
+Right after finishing the brew, put it under cold water to lower the temperature and disassemble the mokapot.
+
+Be careful since the basket might still be hot. What I do is to tilt the bottom chamber 90° and tap the side until the basket get a bit loose to get removed.
+
+Then grab the basket by the funnel and tap it firmly with the other hand, the coffee puck should release easily and the basket gets almost clean.
+
+Rinse everything with water and just scrub with the hands to remove the residual coffee oils. From time to time I use soap as well since its safe. At least for the stainless steel.
+
+Finally and most important, wipe and dry, specially the bottom chamber to take care of the coat and prevent any possible limescale formation.
 
 Cheers.
