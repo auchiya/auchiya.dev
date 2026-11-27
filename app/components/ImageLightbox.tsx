@@ -65,16 +65,23 @@ function StatefulImage({
   /** Match the lightbox image's viewport height cap while the box is reserved. */
   fitViewport?: boolean;
 }) {
-  const [status, setStatus] = useState<ImageStatus>("loading");
+  // Tie the load state to its src so switching images resets to "loading"
+  // during render, rather than flashing the outgoing image at full opacity
+  // with its new, unloaded src before the effect runs.
+  const [loadState, setLoadState] = useState<{ src: string; status: ImageStatus }>({
+    src,
+    status: "loading",
+  });
+  const status = loadState.src === src ? loadState.status : "loading";
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    setStatus("loading");
     // A cached image may finish before React attaches onLoad/onError.
     const image = imageRef.current;
-    if (image?.complete) {
-      setStatus(image.naturalWidth > 0 ? "loaded" : "error");
-    }
+    setLoadState({
+      src,
+      status: image?.complete ? (image.naturalWidth > 0 ? "loaded" : "error") : "loading",
+    });
   }, [src]);
 
   // Reserve the image's box while loading (and on error, when the <img> is
@@ -92,7 +99,12 @@ function StatefulImage({
 
   return (
     <span className="image-frame" style={placeholderStyle}>
-      {status === "loading" ? <span className="image-skeleton" aria-hidden="true" /> : null}
+      <span
+        className={["image-skeleton", status === "loading" ? "" : "image-skeleton-hidden"]
+          .filter(Boolean)
+          .join(" ")}
+        aria-hidden="true"
+      />
       {status === "error" ? (
         <span className="image-error" role="img" aria-label={`Image unavailable: ${alt}`}>
           <svg
@@ -121,9 +133,15 @@ function StatefulImage({
         height={height}
         priority={priority}
         sizes={sizes}
-        className={[className, status === "error" ? "image-failed" : ""].filter(Boolean).join(" ")}
-        onLoad={() => setStatus("loaded")}
-        onError={() => setStatus("error")}
+        className={[
+          className,
+          status === "loaded" ? "image-loaded" : "",
+          status === "error" ? "image-failed" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        onLoad={() => setLoadState({ src, status: "loaded" })}
+        onError={() => setLoadState({ src, status: "error" })}
       />
     </span>
   );
@@ -287,7 +305,6 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
               </button>
             ) : null}
             <StatefulImage
-              key={current.src}
               src={current.src}
               alt={current.alt}
               width={current.width}
