@@ -278,9 +278,16 @@
     cursor: zoom-in;
   }
 
-  .figure-zoom-trigger:focus-visible {
+  /* The figure clips its contents for rounded corners, so an outset ring on
+     the trigger itself would be cut off. Highlight the whole figure card with
+     the same treatment other controls get from the global :focus-visible. */
+  .figure:has(> .figure-zoom-trigger:focus-visible) {
     outline: 2px solid var(--ring);
-    outline-offset: -3px;
+    outline-offset: 3px;
+  }
+
+  .figure-zoom-trigger:focus-visible {
+    outline: none;
   }
 
   .image-frame {
@@ -371,11 +378,17 @@
   }
 
   .lightbox-stage {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
     background-color: var(--raised);
+  }
+
+  /* Leave room for the carousel arrows so they never cover the image. */
+  .lightbox-stage-gallery {
+    padding-inline: 3.25rem;
   }
 
   .lightbox-image {
@@ -384,6 +397,47 @@
     height: auto;
     max-width: 100%;
     max-height: calc(100vh - 9rem);
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 1px solid var(--line);
+    border-radius: 9999px;
+    background-color: var(--canvas);
+    color: var(--ink);
+    cursor: pointer;
+    transition: opacity 150ms ease;
+  }
+
+  .lightbox-nav:hover {
+    opacity: 0.7;
+  }
+
+  .lightbox-nav svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .lightbox-nav-prev {
+    left: 0.5rem;
+  }
+
+  .lightbox-nav-next {
+    right: 0.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox-nav {
+      transition: none;
+    }
   }
 
   .lightbox-bar {
@@ -400,6 +454,15 @@
     font-family: var(--font-sans);
     font-size: 0.8125rem;
     line-height: 1.4;
+    color: var(--subtle);
+  }
+
+  .lightbox-counter {
+    flex-shrink: 0;
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
     color: var(--subtle);
   }
 
