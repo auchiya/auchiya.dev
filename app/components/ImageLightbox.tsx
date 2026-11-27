@@ -53,6 +53,7 @@ function StatefulImage({
   className,
   sizes,
   priority,
+  fitViewport,
 }: {
   src: string;
   alt: string;
@@ -61,6 +62,8 @@ function StatefulImage({
   className: string;
   sizes: string;
   priority?: boolean;
+  /** Match the lightbox image's viewport height cap while the box is reserved. */
+  fitViewport?: boolean;
 }) {
   const [status, setStatus] = useState<ImageStatus>("loading");
   const imageRef = useRef<HTMLImageElement>(null);
@@ -74,16 +77,21 @@ function StatefulImage({
     }
   }, [src]);
 
+  // Reserve the image's box while loading (and on error, when the <img> is
+  // hidden) so the shimmer has real dimensions and nothing jumps on load.
+  // The viewport term mirrors `.lightbox-image`'s max-height.
+  const placeholderStyle =
+    status === "loaded"
+      ? undefined
+      : {
+          aspectRatio: `${width} / ${height}`,
+          width: fitViewport
+            ? `min(100%, ${width}px, calc((100vh - 9rem) * ${width / height}))`
+            : `min(100%, ${width}px)`,
+        };
+
   return (
-    <span
-      className="image-frame"
-      // Reserve the image's box when it fails, since the <img> is then hidden.
-      style={
-        status === "error"
-          ? { aspectRatio: `${width} / ${height}`, width: `min(100%, ${width}px)` }
-          : undefined
-      }
-    >
+    <span className="image-frame" style={placeholderStyle}>
       {status === "loading" ? <span className="image-skeleton" aria-hidden="true" /> : null}
       {status === "error" ? (
         <span className="image-error" role="img" aria-label={`Image unavailable: ${alt}`}>
@@ -286,6 +294,7 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
               height={current.height}
               className="lightbox-image"
               sizes="100vw"
+              fitViewport
             />
             {hasMultiple ? (
               <button

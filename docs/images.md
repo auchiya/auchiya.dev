@@ -7,7 +7,9 @@ URL. Project pages display screenshots with the shared `Figure` component.
 Clicking a `Figure` image opens a full-size lightbox (a native `<dialog>`). It
 closes with Esc, the Close button, or a click outside the image. Keyboard
 shortcuts are paused while it is open. A skeleton fills the image's space while
-it loads; a failed load shows an "Image unavailable" placeholder instead of a
+it loads — in the lightbox it reserves the image's exact box (including the
+viewport height cap) so opening or navigating between images does not shift the
+dialog. A failed load shows an "Image unavailable" placeholder instead of a
 broken image.
 
 Every `Figure` in the same `<article>` joins the lightbox as a carousel, in
