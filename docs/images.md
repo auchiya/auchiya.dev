@@ -9,9 +9,11 @@ closes with Esc, the Close button, or a click outside the image. Keyboard
 shortcuts are paused while it is open. A skeleton fills the image's space while
 it loads — in the lightbox it reserves the image's exact box (including the
 viewport height cap) so opening or navigating between images does not shift the
-dialog. The shimmer crossfades into the loaded image over 180ms, and is instant
-under `prefers-reduced-motion`. A failed load shows an "Image unavailable"
-placeholder instead of a broken image.
+dialog. Opening an image crossfades the shimmer into it over 220ms; stepping
+between images fades the current one out, then fades the next one in. The fades
+use keyframe animations so they still play for cached images, and the swap is
+instant under `prefers-reduced-motion`. A failed load shows an "Image
+unavailable" placeholder instead of a broken image.
 
 Every `Figure` in the same `<article>` joins the lightbox as a carousel, in
 document order. The clicked image appears first; move between images with the

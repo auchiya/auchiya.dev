@@ -23,6 +23,7 @@ type LightboxImage = {
 };
 
 const TRIGGER_SELECTOR = "[data-lightbox-trigger]";
+const FADE_MS = 220;
 
 /**
  * Collect every figure in the current article, in document order, so each
@@ -54,6 +55,7 @@ function StatefulImage({
   sizes,
   priority,
   fitViewport,
+  leaving,
 }: {
   src: string;
   alt: string;
@@ -64,10 +66,12 @@ function StatefulImage({
   priority?: boolean;
   /** Match the lightbox image's viewport height cap while the box is reserved. */
   fitViewport?: boolean;
+  /** Play the fade-out before the carousel swaps to the next image. */
+  leaving?: boolean;
 }) {
   // Tie the load state to its src so switching images resets to "loading"
-  // during render, rather than flashing the outgoing image at full opacity
-  // with its new, unloaded src before the effect runs.
+  // during render, rather than flashing the new, unloaded src at full opacity
+  // before the effect runs.
   const [loadState, setLoadState] = useState<{ src: string; status: ImageStatus }>({
     src,
     status: "loading",
@@ -136,6 +140,7 @@ function StatefulImage({
         className={[
           className,
           status === "loaded" ? "image-loaded" : "",
+          leaving ? "image-leaving" : "",
           status === "error" ? "image-failed" : "",
         ]
           .filter(Boolean)
@@ -161,18 +166,35 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [images, setImages] = useState<LightboxImage[]>([{ src, alt, width, height, caption }]);
   const [index, setIndex] = useState(0);
+  const [leaving, setLeaving] = useState(false);
+  const leaveTimer = useRef<number | undefined>(undefined);
 
   const go = useCallback(
     (delta: number) => {
-      setIndex((current) => {
-        if (images.length < 2) return current;
-        return (current + delta + images.length) % images.length;
-      });
+      if (images.length < 2 || leaving) return;
+      const next = (index + delta + images.length) % images.length;
+      if (next === index) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        setIndex(next);
+        return;
+      }
+
+      // Fade the current image out, then swap so the next one can fade in.
+      setLeaving(true);
+      leaveTimer.current = window.setTimeout(() => {
+        setIndex(next);
+        setLeaving(false);
+      }, FADE_MS);
     },
-    [images.length],
+    [images.length, index, leaving],
   );
 
+  useEffect(() => () => window.clearTimeout(leaveTimer.current), []);
+
   const open = () => {
+    window.clearTimeout(leaveTimer.current);
+    setLeaving(false);
     const trigger = triggerRef.current;
     if (trigger) {
       const collected = collectImages(trigger, { src, alt, width, height, caption });
@@ -312,6 +334,7 @@ export function ImageLightbox({ src, alt, width, height, caption, priority }: Im
               className="lightbox-image"
               sizes="100vw"
               fitViewport
+              leaving={leaving}
             />
             {hasMultiple ? (
               <button

@@ -403,30 +403,58 @@
     max-height: calc(100vh - 9rem);
   }
 
-  /* Crossfade the shimmer into the loaded image instead of popping it in.
-     The skeleton stays mounted so the fade runs in both directions as the
-     carousel switches images. */
+  /* Keyframes, not transitions: a cached image can flip classes before the
+     browser paints, leaving a transition with no start value to animate from.
+     Animations always play from their first keyframe. */
+  @keyframes lightbox-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes lightbox-fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
   .lightbox-stage .lightbox-image {
     opacity: 0;
-    transition: opacity 180ms ease;
   }
 
   .lightbox-stage .image-loaded {
-    opacity: 1;
+    animation: lightbox-fade-in 220ms ease both;
   }
 
-  .lightbox-stage .image-skeleton {
-    transition: opacity 180ms ease;
+  /* Fade the current photo out before the carousel swaps in the next one. */
+  .lightbox-stage .image-leaving {
+    animation: lightbox-fade-out 220ms ease both;
   }
 
   .lightbox-stage .image-skeleton-hidden {
-    animation: none;
+    animation: lightbox-fade-out 220ms ease both;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .lightbox-stage .lightbox-image,
-    .lightbox-stage .image-skeleton {
-      transition: none;
+    .lightbox-stage .image-loaded,
+    .lightbox-stage .image-leaving,
+    .lightbox-stage .image-skeleton-hidden {
+      animation: none;
+    }
+
+    .lightbox-stage .image-loaded {
+      opacity: 1;
+    }
+
+    .lightbox-stage .image-leaving,
+    .lightbox-stage .image-skeleton-hidden {
+      opacity: 0;
     }
   }
 
